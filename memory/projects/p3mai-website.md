@@ -62,14 +62,40 @@ which breaks the cross-links. A `business-website` `preview_start` config
 
 The PMO app has no authentication (single-user tool, Douglas's deliberate choice to deploy
 it fully open on `app.p3mai.com` rather than add a login first) — worth revisiting if it
-ever holds real working data instead of demo content.
+ever holds real working data instead of demo content. **Update 2026-07-28: it's live**, at
+`https://pmo-service.onrender.com`, deployed via Dockerfile with auto-seed on boot (see the
+app's own project notes for the full story). `app.p3mai.com` DNS record still pending.
 
 ## Version control
 Git repo initialized 2026-07-28, pushed to `https://github.com/DRC63/p3mai-website` (private).
 Local commit identity is set per-repo (Douglas Colvin / drcolvin@yahoo.com), not global.
 `.gitignore` excludes Office lock files (`~$*`) and OS junk.
 
+## Hosting: Rise, not Netlify (corrected 2026-07-28)
+The domain's actual host is **Rise** (UK shared cPanel/FTP hosting) — "Deploy to Netlify"
+below was the original plan before Douglas clarified this; Netlify was never actually set up
+and isn't the real plan. Rise has no "Setup Python App" feature (confirmed), so only this
+static site can be deployed there — the PMO app lives on Render instead (see above).
+
+Douglas has been deploying by manually dropping the **entire** `business-website/` folder
+into Rise's `public_html` via FTP/File Manager, which also uploads files that should never
+be public. Only these should go to `public_html`:
+```
+index.html, about.html, services.html, blog.html, contact.html, calculator.html
+style.css, script.js, favicon.svg
+logo-triangle-navy.svg, logo-triangle-white.svg, logo-triangle-icon.svg,
+  logo-triangle-icon.png, logo-triangle-white.png
+douglas.jpg
+blog-thumb-agentic.jpg, blog-thumb-pmo.jpg, blog-thumb-scale.jpg
+```
+Never upload: the CV and working `.docx` files, `CLAUDE.md`/`TASKS.md`/`memory/`/`.git/`
+(internal notes + git history), the internal screenshot JPEGs (`Douglas Colvin.JPG`,
+`Overview.jpeg`, `Progress.jpeg`, `Risks.JPG`, `Status Report *.JPG`, `Tasks A.jpeg`,
+`Tracker.jpeg`), or the superseded logo/photo files listed under Conventions above. None of
+this is enforced by Rise (no directory-listing protection needed to exploit it — a guessed
+or discovered filename is enough), so it's a real exposure, not just clutter. Flagged to
+Douglas 2026-07-28; unconfirmed whether he's cleaned up what's already been uploaded.
+
 ## Next Up
-- Deploy to Netlify (first-time deploy — Douglas wants a step-by-step walkthrough)
-- Deploy PMO Service app (see its own project notes) to Render (or similar), point `app.p3mai.com` at it via DNS CNAME
-- Point `p3mai.com` at Netlify via DNS once the Netlify site exists
+- Clean up / redo the Rise `public_html` upload using the file list above
+- Add DNS CNAME `app` → Render's target for `app.p3mai.com` in Rise's DNS panel
