@@ -4,6 +4,15 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  /* ---------- PMO app link (env-aware) ---------- */
+  // Points at the local dev server while working on localhost; swaps to the
+  // real subdomain automatically once this site is served from p3mai.com,
+  // so there's nothing to remember to change by hand at deploy time.
+  var pmoAppLink = document.querySelector('a[href*="localhost:5173"]');
+  if (pmoAppLink && !/^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)) {
+    pmoAppLink.href = 'https://app.p3mai.com';
+  }
+
   /* ---------- Page loader / transition overlay ---------- */
   var pageTransition = document.getElementById('page-transition');
 
