@@ -1,7 +1,7 @@
 # P3MAI Website
 
 **Also called:** "the site", "my business website"
-**Status:** Active — built, branded, and populated; deployment pending.
+**Status:** Active — built, branded, and populated. Git repo pushed to GitHub; hosting/DNS deployment still pending.
 **Supersedes:** Bright Path Coaching (same codebase, fully rebranded July 2026).
 
 ## What It Is
@@ -44,5 +44,32 @@ Business website for P3MAI — Program, Project, and PMO Management in AI. Dougl
 - Standard verification after changes: CSS brace balance, HTML tag balance, `node --check` on JS
 - Old unused files still in folder: logo-icon.svg, logo-navy.svg, logo-white.svg (superseded logo concept), me.jpg (original photo), image0–4.jpeg
 
+## PMO Service app integration (2026-07-28)
+The Services page's PMO card has an "Example" button linking to the PMO Service app
+(separate project, `../claude-code/pmo-service/`), and the app's sidebar links back via a
+"Back to Website" link. Both use runtime env-detection in JS (`window.location.hostname`)
+rather than hardcoded URLs, so nothing needs manual editing between local dev
+(`localhost:5173` / `localhost:4173`) and production (`app.p3mai.com` / `p3mai.com`).
+Gotcha already hit once: `window.location.hostname` is an empty string for `file://` pages,
+not `"localhost"` — the check must explicitly treat `protocol === 'file:'` as local too, or
+opening the raw HTML file breaks the link.
+
+Local dev requires the site to be served over HTTP, not opened as a raw `file://` path —
+browsers block navigation from `http://` to `file://` (and the reverse is unreliable too),
+which breaks the cross-links. A `business-website` `preview_start` config
+(`python -m http.server 4173`) was added to the working-directory-level
+`.claude/launch.json` for this reason.
+
+The PMO app has no authentication (single-user tool, Douglas's deliberate choice to deploy
+it fully open on `app.p3mai.com` rather than add a login first) — worth revisiting if it
+ever holds real working data instead of demo content.
+
+## Version control
+Git repo initialized 2026-07-28, pushed to `https://github.com/DRC63/p3mai-website` (private).
+Local commit identity is set per-repo (Douglas Colvin / drcolvin@yahoo.com), not global.
+`.gitignore` excludes Office lock files (`~$*`) and OS junk.
+
 ## Next Up
 - Deploy to Netlify (first-time deploy — Douglas wants a step-by-step walkthrough)
+- Deploy PMO Service app (see its own project notes) to Render (or similar), point `app.p3mai.com` at it via DNS CNAME
+- Point `p3mai.com` at Netlify via DNS once the Netlify site exists

@@ -16,6 +16,7 @@ Douglas Colvin (drcolvin@yahoo.com, drcolvin63@googlemail.com). Founder of P3MAI
 | **P3MAI** | Program, Project, and PMO Management in AI — Douglas's consultancy |
 | PMO | Project/Programme Management Office |
 | the site | The P3MAI 5-page website in this folder |
+| the app / PMO Service | Separate internal PMO tool at `../claude-code/pmo-service/` — linked from this site's Services page (PMO card → "Example" button) and links back via its own sidebar. Deploys to `app.p3mai.com`, a subdomain of this site's domain. |
 
 ## Projects
 
