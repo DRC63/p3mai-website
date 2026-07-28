@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | P3MAI</title>
+  <meta name="description" content="Get in touch with P3MAI to talk through your AI programme, project, or PMO needs.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="page-transition" id="page-transition" aria-hidden="true">
+    <div class="loader-mark">P</div>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar container">
+      <a href="index.html" class="logo"><img src="logo-triangle-navy.svg" alt="P3MAI" class="logo-mark"></a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="page-hero">
+      <div class="container">
+        <h1>Get In Touch</h1>
+        <p>Talk through your programme, project, or PMO needs — we usually reply within 1–2 business days.</p>
+      </div>
+    </section>
+
+    <section class="contact-section">
+      <div class="container contact-grid">
+
+        <form id="contact-form" class="contact-form reveal" novalidate>
+          <div class="form-group" data-field="name">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your full name" required>
+            <div class="field-error">Please enter your name.</div>
+          </div>
+          <div class="form-group" data-field="email">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            <div class="field-error">Please enter a valid email address.</div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone <span class="optional">(optional)</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="+971 5 85 383 932">
+          </div>
+          <div class="form-group" data-field="message">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us a bit about your programme, project, or PMO needs..." required></textarea>
+            <div class="field-error">Please enter a message.</div>
+          </div>
+          <button type="submit" class="btn btn-accent btn-block">Send Message</button>
+          <div id="form-success" class="form-success hidden"></div>
+        </form>
+
+        <div class="contact-details reveal">
+          <div class="contact-info-card">
+            <h3>Reach Us Directly</h3>
+            <div class="contact-info-row">
+              <span class="icon">📍</span>
+              <span>Dubai / Abu Dhabi, UAE</span>
+            </div>
+            <div class="contact-info-row">
+              <span class="icon">📞</span>
+              <a href="tel:+971585383932">+971 5 85 383 932</a>
+            </div>
+            <div class="contact-info-row">
+              <span class="icon">📞</span>
+              <a href="tel:+447990520094">+44 7990 520 094</a>
+            </div>
+            <div class="contact-info-row">
+              <span class="icon">✉️</span>
+              <a href="mailto:drcolvin@yahoo.com">drcolvin@yahoo.com</a>
+            </div>
+            <div class="contact-info-row">
+              <span class="icon">✉️</span>
+              <a href="mailto:drcolvin63@googlemail.com">drcolvin63@googlemail.com</a>
+            </div>
+            <div class="social-row">
+              <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/in/douglascolvin/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zm7.5 0h3.83v2.05h.05c.53-1 1.85-2.05 3.8-2.05 4.07 0 4.82 2.68 4.82 6.16V23h-4v-6.84c0-1.63-.03-3.73-2.27-3.73-2.27 0-2.62 1.77-2.62 3.6V23h-4V8z"/></svg>
+              </a>
+              <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M13.5 22v-8.5h2.85l.43-3.31H13.5V8c0-.96.27-1.62 1.65-1.62h1.76V3.42C16.6 3.36 15.6 3.27 14.43 3.27c-2.45 0-4.13 1.5-4.13 4.24v2.68H7.44v3.31h2.86V22h3.2z"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="map-embed">
+            <iframe
+              src="https://www.google.com/maps?q=Dubai+International+Financial+Centre,+Dubai,+UAE&output=embed"
+              width="100%" height="100%" style="border:0"
+              allowfullscreen loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="P3MAI location — DIFC, Dubai"></iframe>
+          </div>
+
+          <div class="hours-card">
+            <h3>Business Hours</h3>
+            <div class="hours-row"><span>Monday – Friday</span><span>9 AM – 6 PM GST</span></div>
+            <div class="hours-row"><span>Saturday – Sunday</span><span>By appointment</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="logo-triangle-white.svg" alt="P3MAI" class="footer-logo-mark">
+        <p>AI Program and Project Management Delivered at Scale.</p>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>Dubai / Abu Dhabi, UAE</p>
+        <p><a href="tel:+971585383932">+971 5 85 383 932</a></p>
+        <p><a href="tel:+447990520094">+44 7990 520 094</a></p>
+        <p><a href="mailto:drcolvin@yahoo.com">drcolvin@yahoo.com</a></p>
+      </div>
+      <div class="footer-social">
+        <h4>Follow</h4>
+        <div class="social-row">
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/douglascolvin/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zm7.5 0h3.83v2.05h.05c.53-1 1.85-2.05 3.8-2.05 4.07 0 4.82 2.68 4.82 6.16V23h-4v-6.84c0-1.63-.03-3.73-2.27-3.73-2.27 0-2.62 1.77-2.62 3.6V23h-4V8z"/></svg>
+          </a>
+          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M13.5 22v-8.5h2.85l.43-3.31H13.5V8c0-.96.27-1.62 1.65-1.62h1.76V3.42C16.6 3.36 15.6 3.27 14.43 3.27c-2.45 0-4.13 1.5-4.13 4.24v2.68H7.44v3.31h2.86V22h3.2z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>&copy; 2026 P3MAI. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

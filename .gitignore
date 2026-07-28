@@ -1,0 +1,7 @@
+# Office lock/temp files
+~$*
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini

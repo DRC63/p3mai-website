@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Cost Estimator | P3MAI</title>
+<meta name="description" content="Get an instant estimate for your website, web application, or automation project.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-primary: #0B2545;
+    --color-primary-dark: #071830;
+    --color-primary-light: #1B3F6E;
+    --color-accent: #C9A227;
+    --color-accent-dark: #A8841C;
+    --color-bg: #F6F7F9;
+    --color-bg-alt: #EBEDF2;
+    --color-text: #1C2B3A;
+    --color-text-muted: #5B6675;
+    --color-white: #ffffff;
+    --color-border: #E1E5EB;
+    --font-main: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --shadow-sm: 3px 3px 10px rgba(11, 37, 69, 0.08);
+    --shadow-md: 5px 5px 20px rgba(11, 37, 69, 0.12);
+    --shadow-lg: 8px 10px 32px rgba(11, 37, 69, 0.16);
+    --transition: 0.2s ease;
+  }
+
+  * , *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: var(--font-main);
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding: 56px 20px 80px;
+  }
+
+  .page-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .calc-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .calc-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-dark);
+    background: rgba(201, 162, 39, 0.12);
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  .calc-header h1 {
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 10px;
+  }
+  .calc-header p {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  .calc-card {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 40px;
+  }
+
+  .calc-section + .calc-section {
+    margin-top: 36px;
+    padding-top: 36px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .section-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-white);
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-label h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin: 0;
+  }
+  .section-hint {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin: 0 0 18px 36px;
+  }
+
+  /* Option grids */
+  .option-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+  }
+  .option-grid.timeline-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .option-card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 16px 18px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color var(--transition), background var(--transition), box-shadow var(--transition), transform var(--transition);
+    background: var(--color-white);
+    box-shadow: var(--shadow-sm);
+  }
+  .option-card:hover {
+    border-color: var(--color-primary-light);
+    transform: translateY(-1px);
+  }
+  .option-card.selected {
+    border-color: var(--color-primary);
+    background: rgba(11, 37, 69, 0.04);
+    box-shadow: var(--shadow-sm), 0 0 0 3px rgba(11, 37, 69, 0.08);
+  }
+  .option-card input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .option-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .option-title {
+    font-weight: 600;
+    font-size: 0.96rem;
+    color: var(--color-text);
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .option-sub {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .option-price {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--color-primary);
+    white-space: normal;
+    text-align: right;
+    flex-shrink: 0;
+    max-width: 42%;
+    overflow-wrap: break-word;
+  }
+  .option-card.selected .option-price { color: var(--color-accent-dark); }
+
+  .check-indicator {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    border: 2px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    transition: all var(--transition);
+  }
+  .option-grid:not(.timeline-grid):not(.project-grid) .check-indicator,
+  .features-grid .check-indicator {
+    border-radius: 6px;
+  }
+  .project-grid .check-indicator,
+  .timeline-grid .check-indicator {
+    border-radius: 50%;
+  }
+  .option-card.selected .check-indicator {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+  .check-indicator svg {
+    width: 12px;
+    height: 12px;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: all var(--transition);
+  }
+  .option-card.selected .check-indicator svg {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Breakdown */
+  .breakdown {
+    margin-top: 36px;
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-md);
+    padding: 22px 26px;
+    box-shadow: var(--shadow-sm);
+  }
+  .breakdown h3 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    margin: 0 0 14px;
+  }
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.92rem;
+    padding: 6px 0;
+    color: var(--color-text);
+  }
+  .breakdown-row span:first-child {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .breakdown-row span:last-child {
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .breakdown-empty {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .total-section {
+    margin-top: 24px;
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    border-radius: var(--radius-md);
+    padding: 32px 24px;
+    color: var(--color-white);
+    box-shadow: var(--shadow-md);
+  }
+  .total-label {
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 8px;
+  }
+  .total-amount {
+    font-size: clamp(2.4rem, 6vw, 3.4rem);
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1.1;
+  }
+  .total-monthly {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.85);
+  }
+  .total-monthly strong { color: var(--color-white); }
+
+  .quote-btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 16px;
+    border: none;
+    border-radius: 999px;
+    background: var(--color-accent);
+    color: var(--color-primary-dark);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    box-shadow: var(--shadow-sm);
+  }
+  .quote-btn:hover {
+    background: var(--color-accent-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .quote-message {
+    margin-top: 16px;
+    padding: 16px 20px;
+    border-radius: var(--radius-sm);
+    background: rgba(201, 162, 39, 0.1);
+    border: 1px solid rgba(201, 162, 39, 0.35);
+    color: var(--color-text);
+    font-size: 0.95rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    display: none;
+  }
+  .quote-message.visible {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+  .quote-message a {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .calc-footnote {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-top: 20px;
+  }
+
+  @media (max-width: 560px) {
+    .calc-card { padding: 28px 22px; }
+    body { padding: 36px 14px 60px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="page-wrap">
+
+    <div class="calc-header">
+      <span class="calc-eyebrow">P3MAI</span>
+      <h1>Project Cost Estimator</h1>
+      <p>Get an instant estimate for your project.</p>
+    </div>
+
+    <div class="calc-card">
+
+      <!-- Section 1: Project Type -->
+      <div class="calc-section">
+        <div class="section-label">
+          <span class="section-num">1</span>
+          <h2>Project Type</h2>
+        </div>
+        <p class="section-hint">Choose the option that best matches what you need built.</p>
+        <div class="option-grid project-grid" data-group="projectType">
+
+          <label class="option-card" data-price="500">
+            <input type="radio" name="projectType" value="500" checked>
+            <span class="option-main">
+              <span class="option-title">Basic Website</span>
+              <span class="option-sub">Single-purpose landing page</span>
+            </span>
+            <span class="option-price">$500</span>
+          </label>
+
+          <label class="option-card" data-price="1200">
+            <input type="radio" name="projectType" value="1200">
+            <span class="option-main">
+              <span class="option-title">Multi-Page Website</span>
+              <span class="option-sub">5–10 pages, full site</span>
+            </span>
+            <span class="option-price">$1,200</span>
+          </label>
+
+          <label class="option-card" data-price="2500">
+            <input type="radio" name="projectType" value="2500">
+            <span class="option-main">
+              <span class="option-title">Web Application</span>
+              <span class="option-sub">Custom logic, database-backed</span>
+            </span>
+            <span class="option-price">$2,500</span>
+          </label>
+
+          <label class="option-card" data-price="800">
+            <input type="radio" name="projectType" value="800">
+            <span class="option-main">
+              <span class="option-title">Automation / Script</span>
+              <span class="option-sub">Task automation, integrations</span>
+            </span>
+            <span class="option-price">$800</span>
+          </label>
+
+        </div>
+      </div>
+
+      <!-- Section 2: Additional Features -->
+      <div class="calc-section">
+        <div class="section-label">
+          <span class="section-num">2</span>
+          <h2>Additional Features</h2>
+        </div>
+        <p class="section-hint">Select any add-ons you'd like included.</p>
+        <div class="option-grid features-grid" data-group="features">
+
+          <label class="option-card" data-price="200" data-recurring="false">
+            <input type="checkbox" name="feature" value="200" data-label="Responsive/Mobile Design">
+            <span class="option-main">
+              <span class="option-title">Responsive/Mobile Design</span>
+            </span>
+            <span class="option-price">+$200</span>
+          </label>
+
+          <label class="option-card" data-price="300" data-recurring="false">
+            <input type="checkbox" name="feature" value="300" data-label="Contact Form">
+            <span class="option-main">
+              <span class="option-title">Contact Form</span>
+            </span>
+            <span class="option-price">+$300</span>
+          </label>
+
+          <label class="option-card" data-price="300" data-recurring="false">
+            <input type="checkbox" name="feature" value="300" data-label="SEO Optimization">
+            <span class="option-main">
+              <span class="option-title">SEO Optimization</span>
+            </span>
+            <span class="option-price">+$300</span>
+          </label>
+
+          <label class="option-card" data-price="400" data-recurring="false">
+            <input type="checkbox" name="feature" value="400" data-label="Content Writing (5 pages)">
+            <span class="option-main">
+              <span class="option-title">Content Writing (5 pages)</span>
+            </span>
+            <span class="option-price">+$400</span>
+          </label>
+
+          <label class="option-card" data-price="150" data-recurring="false">
+            <input type="checkbox" name="feature" value="150" data-label="Social Media Integration">
+            <span class="option-main">
+              <span class="option-title">Social Media Integration</span>
+            </span>
+            <span class="option-price">+$150</span>
+          </label>
+
+          <label class="option-card" data-price="200" data-recurring="true">
+            <input type="checkbox" name="feature" value="200" data-label="Monthly Maintenance Plan" data-recurring="true">
+            <span class="option-main">
+              <span class="option-title">Monthly Maintenance Plan</span>
+            </span>
+            <span class="option-price">+$200/mo</span>
+          </label>
+
+        </div>
+      </div>
+
+      <!-- Section 3: Timeline -->
+      <div class="calc-section">
+        <div class="section-label">
+          <span class="section-num">3</span>
+          <h2>Timeline</h2>
+        </div>
+        <p class="section-hint">Faster turnaround adds a surcharge to the one-time project cost.</p>
+        <div class="option-grid timeline-grid" data-group="timeline">
+
+          <label class="option-card" data-surcharge="0">
+            <input type="radio" name="timeline" value="0" checked>
+            <span class="option-main">
+              <span class="option-title">Standard</span>
+              <span class="option-sub">2–3 weeks</span>
+            </span>
+            <span class="option-price">No extra cost</span>
+          </label>
+
+          <label class="option-card" data-surcharge="0.3">
+            <input type="radio" name="timeline" value="0.3">
+            <span class="option-main">
+              <span class="option-title">Rush</span>
+              <span class="option-sub">1 week</span>
+            </span>
+            <span class="option-price">+30%</span>
+          </label>
+
+          <label class="option-card" data-surcharge="0.6">
+            <input type="radio" name="timeline" value="0.6">
+            <span class="option-main">
+              <span class="option-title">Express</span>
+              <span class="option-sub">3 days</span>
+            </span>
+            <span class="option-price">+60%</span>
+          </label>
+
+        </div>
+      </div>
+
+      <!-- Breakdown -->
+      <div class="breakdown">
+        <h3>Estimate Breakdown</h3>
+        <div id="breakdown-list"></div>
+      </div>
+
+      <!-- Total -->
+      <div class="total-section">
+        <div class="total-label">Estimated Total</div>
+        <div class="total-amount" id="total-amount">$500</div>
+        <div class="total-monthly" id="total-monthly"></div>
+      </div>
+
+      <button type="button" class="quote-btn" id="quote-btn">Get a Detailed Quote</button>
+      <div class="quote-message" id="quote-message">
+        Email us at <a href="mailto:hello@P3MAI.com">hello@P3MAI.com</a> with your selections for a detailed proposal.
+      </div>
+
+    </div>
+
+    <p class="calc-footnote">Estimates are indicative only. Final pricing is confirmed after a scoping conversation.</p>
+
+  </div>
+
+  <script>
+    (function () {
+      const projectRadios = document.querySelectorAll('input[name="projectType"]');
+      const featureChecks = document.querySelectorAll('input[name="feature"]');
+      const timelineRadios = document.querySelectorAll('input[name="timeline"]');
+
+      const totalAmountEl = document.getElementById('total-amount');
+      const totalMonthlyEl = document.getElementById('total-monthly');
+      const breakdownListEl = document.getElementById('breakdown-list');
+
+      const money = (n) => '$' + n.toLocaleString('en-US', { maximumFractionDigits: 0 });
+
+      function updateCardStates() {
+        document.querySelectorAll('.option-card').forEach(card => {
+          const input = card.querySelector('input');
+          card.classList.toggle('selected', input.checked);
+        });
+      }
+
+      function calculate() {
+        const projectInput = document.querySelector('input[name="projectType"]:checked');
+        const projectCard = projectInput.closest('.option-card');
+        const baseCost = parseFloat(projectInput.value);
+        const baseLabel = projectCard.querySelector('.option-title').textContent;
+
+        let oneTimeFeaturesTotal = 0;
+        let monthlyTotal = 0;
+        const lineItems = [{ label: baseLabel, amount: baseCost }];
+
+        featureChecks.forEach(input => {
+          if (input.checked) {
+            const isRecurring = input.dataset.recurring === 'true';
+            const amount = parseFloat(input.value);
+            const label = input.dataset.label;
+            if (isRecurring) {
+              monthlyTotal += amount;
+            } else {
+              oneTimeFeaturesTotal += amount;
+              lineItems.push({ label: label, amount: amount });
+            }
+          }
+        });
+
+        const timelineInput = document.querySelector('input[name="timeline"]:checked');
+        const timelineCard = timelineInput.closest('.option-card');
+        const surchargeRate = parseFloat(timelineInput.value);
+        const subtotal = baseCost + oneTimeFeaturesTotal;
+        const surchargeAmount = Math.round(subtotal * surchargeRate);
+
+        if (surchargeRate > 0) {
+          const timelineLabel = timelineCard.querySelector('.option-title').textContent;
+          lineItems.push({ label: `${timelineLabel} surcharge (${Math.round(surchargeRate * 100)}%)`, amount: surchargeAmount });
+        }
+
+        const oneTimeTotal = subtotal + surchargeAmount;
+
+        // Render breakdown
+        breakdownListEl.innerHTML = lineItems.map(item =>
+          `<div class="breakdown-row"><span>${item.label}</span><span>${money(item.amount)}</span></div>`
+        ).join('');
+
+        if (monthlyTotal > 0) {
+          breakdownListEl.innerHTML += `<div class="breakdown-row"><span>Monthly Maintenance Plan</span><span>${money(monthlyTotal)}/mo</span></div>`;
+        }
+
+        // Render totals
+        totalAmountEl.textContent = money(oneTimeTotal);
+        totalMonthlyEl.textContent = monthlyTotal > 0
+          ? `plus a recurring ${money(monthlyTotal)}/month for ongoing maintenance`
+          : '';
+
+        updateCardStates();
+      }
+
+      [...projectRadios, ...featureChecks, ...timelineRadios].forEach(input => {
+        input.addEventListener('change', calculate);
+      });
+
+      // Quote button
+      document.getElementById('quote-btn').addEventListener('click', function () {
+        document.getElementById('quote-message').classList.add('visible');
+      });
+
+      // Initial render
+      calculate();
+    })();
+  </script>
+
+</body>
+</html>
