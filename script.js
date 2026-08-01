@@ -27,6 +27,17 @@ document.addEventListener('DOMContentLoaded', function () {
     methodMapLink.href = 'https://method-map.onrender.com';
   }
 
+  /* ---------- P3M3 Maturity Assessment app link (env-aware) ---------- */
+  // Same pattern again: localhost:5174 in dev, the live app in prod. Prod
+  // target is p3m3-assessment.onrender.com for now; switch to p3m3.p3mai.com
+  // if/when that custom domain is attached.
+  var p3m3Link = document.querySelector(
+    'a[href*="localhost:5174"], a[href*="p3m3-assessment.onrender.com"], a[href*="p3m3.p3mai.com"]'
+  );
+  if (p3m3Link && !isLocalContext) {
+    p3m3Link.href = 'https://p3m3-assessment.onrender.com';
+  }
+
   /* ---------- Page loader / transition overlay ---------- */
   var pageTransition = document.getElementById('page-transition');
 
