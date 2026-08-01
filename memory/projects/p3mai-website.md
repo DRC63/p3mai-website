@@ -66,6 +66,21 @@ ever holds real working data instead of demo content. **Update 2026-07-28: it's 
 `https://pmo-service.onrender.com`, deployed via Dockerfile with auto-seed on boot (see the
 app's own project notes for the full story). `app.p3mai.com` DNS record still pending.
 
+## Method Map app integration (2026-08-01)
+The Services page's **Project Management** card has a "PRINCE2 Method Map" button linking to
+the Method Map app (separate project, `../claude-code/method-map/` — a PRINCE2 interdependency
+network + lifecycle explorer). Uses the **same env-aware pattern as the PMO link**: the
+services.html href is `http://localhost:5175` (local dev), and `script.js` swaps it to the
+live app in production. Prod target is currently `https://method-map.onrender.com` — **switch
+to `https://prince2.p3mai.com` once that custom domain's DNS CNAME resolves** (the app is set
+up for prince2.p3mai.com in Render; DNS pending). The `script.js` selector already matches all
+three hosts (`localhost:5175` / `method-map.onrender.com` / `prince2.p3mai.com`), so only the
+swap-target string in the JS needs changing.
+
+**Gotcha:** the `localhost:5173` (PMO) and `localhost:5175` (Method Map) hrefs in
+services.html are NOT bugs — they're the dev defaults that `script.js` rewrites to the live
+URLs in production. Do NOT "fix" them to hardcoded production URLs; that breaks local dev.
+
 ## Version control
 Git repo initialized 2026-07-28, pushed to `https://github.com/DRC63/p3mai-website` (private).
 Local commit identity is set per-repo (Douglas Colvin / drcolvin@yahoo.com), not global.

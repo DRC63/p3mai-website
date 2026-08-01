@@ -17,6 +17,7 @@ Douglas Colvin (drcolvin@yahoo.com, drcolvin63@googlemail.com). Founder of P3MAI
 | PMO | Project/Programme Management Office |
 | the site | The P3MAI 5-page website in this folder |
 | the app / PMO Service | Separate internal PMO tool at `../claude-code/pmo-service/` — linked from this site's Services page (PMO card → "Example" button) and links back via its own sidebar. Deploys to `app.p3mai.com`, a subdomain of this site's domain. |
+| Method Map | PRINCE2 interdependency + lifecycle explorer at `../claude-code/method-map/` — linked from the Services page (Project Management card → "PRINCE2 Method Map" button), env-aware in `script.js` like the PMO link. Live at `method-map.onrender.com`; `prince2.p3mai.com` pending DNS. |
 
 ## Projects
 

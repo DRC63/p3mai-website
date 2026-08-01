@@ -16,6 +16,17 @@ document.addEventListener('DOMContentLoaded', function () {
     pmoAppLink.href = 'https://app.p3mai.com';
   }
 
+  /* ---------- Method Map app link (env-aware) ---------- */
+  // Same pattern as the PMO link: localhost:5175 in dev, the live app in prod.
+  // Prod target is method-map.onrender.com for now; switch to prince2.p3mai.com
+  // once that custom domain's DNS resolves.
+  var methodMapLink = document.querySelector(
+    'a[href*="localhost:5175"], a[href*="method-map.onrender.com"], a[href*="prince2.p3mai.com"]'
+  );
+  if (methodMapLink && !isLocalContext) {
+    methodMapLink.href = 'https://method-map.onrender.com';
+  }
+
   /* ---------- Page loader / transition overlay ---------- */
   var pageTransition = document.getElementById('page-transition');
 
