@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
   // page is opened directly as a file:// path, where hostname is empty);
   // swaps to the real subdomain automatically once this site is served from
   // p3mai.com, so there's nothing to remember to change by hand at deploy time.
-  var pmoAppLink = document.querySelector('a[href*="localhost:5173"], a[href*="app.p3mai.com"]');
+  var pmoAppLink = document.querySelector('a[href*="localhost:5173"], a[href*="app.p3mai.com"], a[href*="apps.p3mai.com/pmo"]');
   var isLocalContext = window.location.protocol === 'file:' ||
     /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname);
   if (pmoAppLink && !isLocalContext) {
-    pmoAppLink.href = 'https://app.p3mai.com';
+    pmoAppLink.href = 'https://apps.p3mai.com/pmo';
   }
 
   /* ---------- Method Map app link (env-aware) ---------- */
