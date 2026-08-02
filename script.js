@@ -36,6 +36,16 @@ document.addEventListener('DOMContentLoaded', function () {
     methodMapLink.href = 'https://apps.p3mai.com/prince2';
   }
 
+  /* ---------- SAFe Method Map app link (env-aware) ---------- */
+  // Project pillar's scaled-agile app; localhost:5177 sentinel in dev (method-map
+  // run with FRAMEWORK_KEY=safe-essential), the front door in prod.
+  var safeLink = document.querySelector(
+    'a[href*="localhost:5177"], a[href*="safe-method-map.onrender.com"], a[href*="apps.p3mai.com/safe"]'
+  );
+  if (safeLink && !isLocalContext) {
+    safeLink.href = 'https://apps.p3mai.com/safe';
+  }
+
   /* ---------- P3M3 Maturity Assessment app link (env-aware) ---------- */
   // Same pattern again: localhost:5174 in dev, the live app in prod (front door).
   var p3m3Link = document.querySelector(
