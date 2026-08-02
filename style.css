@@ -457,8 +457,9 @@ section { padding: 88px 0; }
   height: 100%;
   transition: transform var(--transition), box-shadow var(--transition);
   border-top: 5px solid var(--color-primary);
+  position: relative;
 }
-.pricing-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
+.pricing-card:hover { transform: scale(1.05) translateY(-8px); box-shadow: var(--shadow-lg); z-index: 3; }
 .pricing-card.featured {
   border: 2px solid var(--color-accent);
   border-top: 5px solid var(--color-accent);
@@ -549,7 +550,7 @@ section { padding: 88px 0; }
 .comparison-table td:nth-child(2) { background: rgba(201,162,39,0.08); }
 .comparison-table td.check { color: var(--color-accent-dark); font-weight: 700; font-size: 1.1rem; }
 .comparison-table tbody tr:last-child th,
-.comparison-table tbody tr:last-child td { border-bottom: none; font-weight: 700; color: var(--color-text); }
+.comparison-table tbody tr:last-child td { border-bottom: none; }
 
 /* =========================================================
    Blog page
