@@ -18,24 +18,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ---------- Method Map app link (env-aware) ---------- */
   // Same pattern as the PMO link: localhost:5175 in dev, the live app in prod.
-  // Prod target is method-map.onrender.com for now; switch to prince2.p3mai.com
-  // once that custom domain's DNS resolves.
+  // All apps now live behind the shared front door at apps.p3mai.com/<slug>.
   var methodMapLink = document.querySelector(
-    'a[href*="localhost:5175"], a[href*="method-map.onrender.com"], a[href*="prince2.p3mai.com"]'
+    'a[href*="localhost:5175"], a[href*="method-map.onrender.com"], a[href*="prince2.p3mai.com"], a[href*="apps.p3mai.com/prince2"]'
   );
   if (methodMapLink && !isLocalContext) {
-    methodMapLink.href = 'https://method-map.onrender.com';
+    methodMapLink.href = 'https://apps.p3mai.com/prince2';
   }
 
   /* ---------- P3M3 Maturity Assessment app link (env-aware) ---------- */
-  // Same pattern again: localhost:5174 in dev, the live app in prod. Prod
-  // target is p3m3-assessment.onrender.com for now; switch to p3m3.p3mai.com
-  // if/when that custom domain is attached.
+  // Same pattern again: localhost:5174 in dev, the live app in prod (front door).
   var p3m3Link = document.querySelector(
-    'a[href*="localhost:5174"], a[href*="p3m3-assessment.onrender.com"], a[href*="p3m3.p3mai.com"]'
+    'a[href*="localhost:5174"], a[href*="p3m3-assessment.onrender.com"], a[href*="p3m3.p3mai.com"], a[href*="apps.p3mai.com/p3m3"]'
   );
   if (p3m3Link && !isLocalContext) {
-    p3m3Link.href = 'https://p3m3-assessment.onrender.com';
+    p3m3Link.href = 'https://apps.p3mai.com/p3m3';
   }
 
   /* ---------- Page loader / transition overlay ---------- */
