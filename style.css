@@ -459,7 +459,10 @@ section { padding: 88px 0; }
   border-top: 5px solid var(--color-primary);
   position: relative;
 }
-.pricing-card:hover { transform: scale(1.05) translateY(-8px); box-shadow: var(--shadow-lg); z-index: 3; }
+/* Scoped to .services-grid so this beats the `.reveal.in-view` transform (same
+   specificity, later in the file) that otherwise pins the cards and cancels the
+   hover scale. */
+.services-grid .pricing-card:hover { transform: scale(1.05) translateY(-8px); box-shadow: var(--shadow-lg); z-index: 3; }
 .pricing-card.featured {
   border: 2px solid var(--color-accent);
   border-top: 5px solid var(--color-accent);
