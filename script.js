@@ -16,6 +16,16 @@ document.addEventListener('DOMContentLoaded', function () {
     pmoAppLink.href = 'https://apps.p3mai.com/pmo';
   }
 
+  /* ---------- MSP Method Map app link (env-aware) ---------- */
+  // Programme pillar's app; localhost:5176 in dev (method-map run with
+  // FRAMEWORK_KEY=msp-5), the front door in prod.
+  var mspLink = document.querySelector(
+    'a[href*="localhost:5176"], a[href*="msp-method-map.onrender.com"], a[href*="apps.p3mai.com/msp"]'
+  );
+  if (mspLink && !isLocalContext) {
+    mspLink.href = 'https://apps.p3mai.com/msp';
+  }
+
   /* ---------- Method Map app link (env-aware) ---------- */
   // Same pattern as the PMO link: localhost:5175 in dev, the live app in prod.
   // All apps now live behind the shared front door at apps.p3mai.com/<slug>.
