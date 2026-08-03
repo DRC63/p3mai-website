@@ -138,6 +138,15 @@ section { padding: 88px 0; }
   height: 40px;
   width: auto;
 }
+.logo-text {
+  margin-left: 10px;
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  color: var(--color-primary);
+}
+.logo-text .brand-ai { color: var(--color-accent); }
 
 .nav-links {
   display: flex;
@@ -813,7 +822,10 @@ section { padding: 88px 0; }
 }
 .footer-brand h3 { color: var(--color-white); margin-bottom: 10px; }
 .footer-brand p { color: rgba(255,255,255,0.65); }
-.footer-logo-mark { display: block; height: 40px; width: auto; margin-bottom: 14px; }
+.footer-logo-mark { display: block; height: 40px; width: auto; }
+.footer-logo-lockup { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.footer-brand .logo-text { margin-left: 0; color: var(--color-white); }
+.footer-brand .logo-text .brand-ai { color: var(--color-accent); }
 .site-footer h4 { color: var(--color-white); font-size: 1rem; margin-bottom: 16px; }
 .site-footer p { color: rgba(255,255,255,0.75); margin-bottom: 8px; }
 .site-footer a:hover { color: var(--color-accent); }
