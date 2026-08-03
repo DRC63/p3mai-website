@@ -46,6 +46,16 @@ document.addEventListener('DOMContentLoaded', function () {
     safeLink.href = 'https://apps.p3mai.com/safe';
   }
 
+  /* ---------- PMBOK Method Map app link (env-aware) ---------- */
+  // Project pillar's PMI process-matrix app; localhost:5178 sentinel in dev
+  // (method-map run with FRAMEWORK_KEY=pmbok-6), the front door in prod.
+  var pmbokLink = document.querySelector(
+    'a[href*="localhost:5178"], a[href*="pmbok-method-map.onrender.com"], a[href*="apps.p3mai.com/pmbok"]'
+  );
+  if (pmbokLink && !isLocalContext) {
+    pmbokLink.href = 'https://apps.p3mai.com/pmbok';
+  }
+
   /* ---------- P3M3 Maturity Assessment app link (env-aware) ---------- */
   // Same pattern again: localhost:5174 in dev, the live app in prod (front door).
   var p3m3Link = document.querySelector(
