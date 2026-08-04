@@ -5,3 +5,8 @@
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Environment / secrets (never commit)
+.env
+.env.*
+!.env.example
