@@ -1,7 +1,9 @@
 # P3MAI Website
 
 **Also called:** "the site", "my business website"
-**Status:** Active — built, branded, and populated. Git repo pushed to GitHub; hosting/DNS deployment still pending.
+**Status:** Active — **LIVE on Rise at p3mai.com** (built, branded, populated). All Services-page
+app buttons resolve to the `apps.p3mai.com` front door. Deploy = manual file upload to Rise
+`public_html` (not git-auto-deployed).
 **Supersedes:** Bright Path Coaching (same codebase, fully rebranded July 2026).
 
 ## What It Is
@@ -64,22 +66,31 @@ The PMO app has no authentication (single-user tool, Douglas's deliberate choice
 it fully open on `app.p3mai.com` rather than add a login first) — worth revisiting if it
 ever holds real working data instead of demo content. **Update 2026-07-28: it's live**, at
 `https://pmo-service.onrender.com`, deployed via Dockerfile with auto-seed on boot (see the
-app's own project notes for the full story). `app.p3mai.com` DNS record still pending.
+app's own project notes for the full story). **Now live at `apps.p3mai.com/pmo`**; the legacy
+`app.p3mai.com` 301-redirects there (handled in the PMO backend), so no separate DNS is pending.
 
-## Method Map app integration (2026-08-01)
-The Services page's **Project Management** card has a "PRINCE2 Method Map" button linking to
-the Method Map app (separate project, `../claude-code/method-map/` — a PRINCE2 interdependency
-network + lifecycle explorer). Uses the **same env-aware pattern as the PMO link**: the
-services.html href is `http://localhost:5175` (local dev), and `script.js` swaps it to the
-live app in production. Prod target is currently `https://method-map.onrender.com` — **switch
-to `https://prince2.p3mai.com` once that custom domain's DNS CNAME resolves** (the app is set
-up for prince2.p3mai.com in Render; DNS pending). The `script.js` selector already matches all
-three hosts (`localhost:5175` / `method-map.onrender.com` / `prince2.p3mai.com`), so only the
-swap-target string in the JS needs changing.
+## App integration — the apps.p3mai.com front door (superseded per-app subdomains, 2026-08-02)
+**IMPORTANT — this replaced the earlier plan.** All the apps are now served under one domain,
+**`apps.p3mai.com/<slug>`**, via a Render reverse proxy (repo `../claude-code/apps-gateway/`).
+There is **no `prince2.p3mai.com`** (that per-subdomain approach was abandoned). Full detail is
+in the auto-memory `project_apps_front_door`.
 
-**Gotcha:** the `localhost:5173` (PMO) and `localhost:5175` (Method Map) hrefs in
-services.html are NOT bugs — they're the dev defaults that `script.js` rewrites to the live
-URLs in production. Do NOT "fix" them to hardcoded production URLs; that breaks local dev.
+Services-page buttons (all env-aware in `script.js`: a `localhost:<port>` dev sentinel is
+rewritten to `apps.p3mai.com/<slug>` in production):
+- **Project Management** card → **PRINCE2** (`/prince2`), **SAFe** (`/safe`), **PMBOK** (`/pmbok`) Method Maps
+- **Programme Management** card → **MSP** Method Map (`/msp`)
+- **PMO** card → PMO Service (`/pmo`) + P3M3 Maturity Assessment (`/p3m3`)
+
+The Method Map app itself is now **four frameworks** from one config-driven codebase (not just
+PRINCE2). See `../claude-code/method-map/CLAUDE.md`.
+
+**Gotcha:** the `localhost:<port>` hrefs in services.html are NOT bugs — they're the dev
+defaults that `script.js` rewrites to the live URLs in production. Do NOT "fix" them to
+hardcoded production URLs; that breaks local dev.
+
+**Gotcha (Rise edge cache):** Rise caches static files by exact URL. After uploading a changed
+`script.js`, bump the query version in services.html (`script.js?v=N`) or the old file keeps
+serving. Currently at `?v=2`.
 
 ## Version control
 Git repo initialized 2026-07-28, pushed to `https://github.com/DRC63/p3mai-website` (private).
@@ -112,5 +123,9 @@ or discovered filename is enough), so it's a real exposure, not just clutter. Fl
 Douglas 2026-07-28; unconfirmed whether he's cleaned up what's already been uploaded.
 
 ## Next Up
-- Clean up / redo the Rise `public_html` upload using the file list above
-- Add DNS CNAME `app` → Render's target for `app.p3mai.com` in Rise's DNS panel
+- Clean up / redo the Rise `public_html` upload using the allow-list above (remove any
+  internal notes / CV / screenshots uploaded by the whole-folder drop).
+
+_(Done since first written: site live on Rise; the `apps.p3mai.com` front door replaced the
+per-app subdomain DNS work — the old "add CNAME for app.p3mai.com" task no longer applies,
+`app.p3mai.com` now 301s to `/pmo`.)_

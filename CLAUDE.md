@@ -15,10 +15,12 @@ Douglas Colvin (drcolvin@yahoo.com, drcolvin63@googlemail.com). Founder of P3MAI
 |------|---------|
 | **P3MAI** | Program, Project, and PMO Management in AI — Douglas's consultancy |
 | PMO | Project/Programme Management Office |
-| the site | The P3MAI 5-page website in this folder |
-| the app / PMO Service | Separate internal PMO tool at `../claude-code/pmo-service/` — linked from this site's Services page (PMO card → "PMO Example" button) and links back via its own sidebar. Deploys to `app.p3mai.com`, a subdomain of this site's domain. |
-| Method Map | PRINCE2 interdependency + lifecycle explorer at `../claude-code/method-map/` — linked from the Services page (Project Management card → "PRINCE2 Method Map" button), env-aware in `script.js` like the PMO link. Live at `method-map.onrender.com`; `prince2.p3mai.com` pending DNS. |
-| P3M3 Assessment | P3M3 PMO Maturity self-assessment (questionnaire/gap/roadmap/business-case) at `../claude-code/p3m3-assessment/` — linked from the Services page (PMO card → "P3M3 Maturity Assessment" button), env-aware in `script.js` (localhost:5174 → live app). Live at `p3m3-assessment.onrender.com`; no custom domain yet (workspace at 2/2). |
+| the site | The P3MAI 5-page website in this folder. **Live on Rise** at p3mai.com. |
+| **apps front door** | **`apps.p3mai.com`** — one domain fronting ALL the apps via a Render reverse proxy (repo `../claude-code/apps-gateway/`). Every app is served at `apps.p3mai.com/<slug>`. This **replaced the old per-app subdomains** (no `prince2.p3mai.com`). Legacy `app.p3mai.com` now 301s to `/pmo`. See the auto-memory `project_apps_front_door`. |
+| the app / PMO Service | Internal PMO tool at `../claude-code/pmo-service/` — Services page PMO card → "PMO Example" button. **Live at `apps.p3mai.com/pmo`** (`app.p3mai.com` redirects there). |
+| Method Map | Config-driven method explorer at `../claude-code/method-map/`. **FOUR frameworks live**, each its own Render service from one codebase: **PRINCE2** `/prince2`, **MSP** `/msp`, **SAFe** `/safe`, **PMBOK** `/pmbok` (all under `apps.p3mai.com`). Services-page buttons: Project Management card has PRINCE2 + SAFe + PMBOK; Programme card has MSP. Env-aware in `script.js` (localhost → `apps.p3mai.com/<slug>`). |
+| P3M3 Assessment | P3M3 PMO Maturity self-assessment at `../claude-code/p3m3-assessment/` — Services page PMO card → "P3M3 Maturity Assessment" button. **Live at `apps.p3mai.com/p3m3`.** |
+| **portfolio strategy** | Cross-app commercial plan (market research, MoSCoW backlog, roadmap) lives at `../P3MAI-Portfolio/` — the layer above all the individual projects. |
 
 ## Projects
 
