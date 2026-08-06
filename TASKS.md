@@ -4,6 +4,10 @@
 - [ ] **Collect 2–3 real testimonials** from past sponsors/colleagues (LinkedIn ask-message
   drafted 2026-08-06 — see session notes), then activate the commented-out "What Colleagues
   Say" section on index.html. Tracked as **MKT-08** in `P3MAI-Portfolio/BACKLOG.md`.
+  **LinkedIn checked 2026-08-06: zero recommendations received** — but 4 people have PENDING
+  requests asking Douglas to recommend THEM (Michel von Behr ex-Core42 "your recommendation
+  would be GOLD!", Aakash S Jain, Andras Tiborc, Thomas Mammen). Reciprocity play: write
+  theirs first, then ask for one back — warmest possible route to the first testimonials.
 - [ ] **Start the content layer** — the identified gap in the revenue stack. One primary platform
   (LinkedIn), specific results-led posts drawn from real delivery (Core42 supercomputers, RBS AD
   transformation, the PMO builds). See `memory/approach/route-to-market.md`.
