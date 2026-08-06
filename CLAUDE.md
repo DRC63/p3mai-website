@@ -36,6 +36,9 @@ Douglas Colvin (drcolvin@yahoo.com, drcolvin63@googlemail.com). Founder of P3MAI
 - Concise, direct communication — minimal unnecessary explanation.
 - No fabricated content on the real business site (no fake testimonials, addresses, or claims — everything grounded in the CV).
 - Logo must remain original artwork (no copyright infringement).
+- **Wordmark is always two-tone: `P3M` in the primary colour, `AI` in gold.** Never flat.
+  The pyramid SVGs are icon-only — the wordmark comes from HTML text beside them.
+  → `memory/approach/brand-lockup.md` (includes the audit command).
 - Prices in **both AED and GBP** (see the `aed-prices` skill).
 - **Build and commercial decisions follow `memory/approach/route-to-market.md`** — value-based
   pricing, named-audience specificity, three-tier offers, validate small before investing.

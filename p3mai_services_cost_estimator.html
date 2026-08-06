@@ -88,9 +88,16 @@
   }
   .rail-empty { font-size: 0.8rem; color: var(--color-text-muted); font-style: italic; line-height: 1.5; }
 
+  /* ---------- Brand lockup (matches style.css) ---------- */
+  .brand-bar { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 22px; }
+  .brand-bar img { display: block; height: 46px; width: auto; }
+  .logo-text {
+    font-weight: 700; font-size: 1.75rem; letter-spacing: -0.5px; line-height: 1;
+    color: var(--color-primary);
+  }
+  .logo-text .brand-ai { color: var(--color-accent); }
+
   /* ---------- Header ---------- */
-  .brand-bar { display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
-  .brand-bar svg { display: block; height: 46px; width: auto; }
   .calc-header { text-align: center; margin-bottom: 26px; }
   .calc-eyebrow {
     display: inline-block; font-size: 0.76rem; font-weight: 600;
@@ -353,20 +360,8 @@
   <div class="page-wrap">
 
     <div class="brand-bar">
-      <svg viewBox="0 0 300 76" role="img" aria-label="P3MAI">
-        <defs>
-          <filter id="sh" x="-50%" y="-50%" width="220%" height="220%">
-            <feDropShadow dx="3" dy="5" stdDeviation="3" flood-color="#000000" flood-opacity="0.28"/>
-          </filter>
-        </defs>
-        <g filter="url(#sh)">
-          <polygon points="16,14 66,14 37,26" fill="#E7C65C"/>
-          <polygon points="16,14 41,58 37,26" fill="#C9A227"/>
-          <polygon points="66,14 41,58 37,26" fill="#8A6B14"/>
-        </g>
-        <text x="100" y="48" font-family="Poppins, 'Segoe UI', system-ui, sans-serif"
-              font-size="34" font-weight="700" fill="#0B2545">P3MAI</text>
-      </svg>
+      <img src="logo-triangle-navy.svg" alt="" aria-hidden="true">
+      <span class="logo-text">P3M<span class="brand-ai">AI</span></span>
     </div>
 
     <div class="calc-header">
@@ -693,7 +688,7 @@
             </div>
             <button type="button" class="quote-btn" id="quote-btn">Get a Detailed Quote</button>
             <div class="quote-message" id="quote-message">
-              Email us at <a href="mailto:drcolvin@P3MAI.com">drcolvin@P3MAI.com</a> with your selections for a detailed proposal.
+              Email us at <a href="mailto:drcolvin@P3MAI.com">drcolvin@P3M<span class="brand-ai">AI</span>.com</a> with your selections for a detailed proposal.
             </div>
           </div>
         </div>
@@ -704,7 +699,7 @@
     <p class="calc-footnote">
       Indicative estimate only. Final pricing is confirmed after a scoping conversation.<br>
       Converted at USD 1 = AED 3.6725 and USD 1 = GBP 0.7434.
-      <a href="index.html">P3MAI</a> · Programme, Project and PMO Management · Dubai / Abu Dhabi, UAE
+      <a href="index.html">P3M<span class="brand-ai">AI</span></a> · Programme, Project and PMO Management · Dubai / Abu Dhabi, UAE
     </p>
 
   </div>

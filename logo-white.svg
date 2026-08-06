@@ -6,5 +6,5 @@
   <circle cx="32" cy="34" r="5" fill="#C9A227"/>
   <circle cx="47" cy="20" r="6" fill="#C9A227"/>
   <circle cx="47" cy="20" r="2.2" fill="#0B2545"/>
-  <text x="92" y="41" font-family="Poppins, 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="34" font-weight="700" fill="#ffffff">P3MAI</text>
+  <text x="92" y="41" font-family="Poppins, 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="34" font-weight="700" fill="#ffffff"><tspan fill="#ffffff">P3M</tspan><tspan fill="#C9A227">AI</tspan></text>
 </svg>
