@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scaling AI Infrastructure Without Losing Control | P3MAI</title>
+  <meta name="description" content="From TOP500-ranked GPU clusters to multi-vendor rollouts under export controls — what actually keeps a $1B AI infrastructure program on track.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=7">
+</head>
+<body>
+
+  <div class="page-transition" id="page-transition" aria-hidden="true">
+    <div class="loader-mark">P</div>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar container">
+      <a href="index.html" class="logo"><img src="logo-triangle-navy.svg" alt="P3MAI" class="logo-mark"><span class="logo-text">P3M<span class="brand-ai">AI</span></span></a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="page-hero">
+      <div class="container">
+        <h1>Scaling AI Infrastructure Without Losing Control</h1>
+        <p class="article-meta">June 2026 &middot; Douglas Colvin<span class="tag">AI Delivery</span><span class="tag">Program Management</span></p>
+      </div>
+    </section>
+
+    <section class="story-section">
+      <div class="container">
+        <div class="article-body reveal">
+          <p>Between 2024 and 2025 I delivered two AI supercomputers that entered the TOP500 list of the world's fastest machines — an Nvidia DGX training cluster of 1,272 GPUs ranked #25 globally and fastest in EMEA, and the AMD MI300X "Maximus" cluster ranked #20. One was delivered under United States export controls on restricted technology, into secure NOC and SCIF environments. I have also watched, across a longer career, what happens to infrastructure programs that scale faster than their controls. This article is about the difference.</p>
+
+          <h2>The mistake is in the name</h2>
+          <p>Organizations call these "AI infrastructure programs" and staff them like IT projects. But at supercomputing scale, the compute is almost the easy part. What you are actually running is <strong>four programs wearing one name</strong>: a global supply-chain program (GPUs and networking gear with brutal lead times and allocation politics); a construction and facilities program (power, cooling, structural load — megawatts, not racks); a compliance and security program (export controls, accreditation, sovereign requirements); and only then a technology integration program. Miss that framing and your governance covers a quarter of your risk.</p>
+
+          <h2>What control looks like at this scale</h2>
+          <p><strong>One owner of the outcome.</strong> Hardware vendors, facilities contractors, network integrators, security teams — each will own their piece impeccably while the whole drifts. Someone has to own the reconciliation of all of it, with the authority to force trade-offs between a vendor's schedule and a facility's readiness. That accountability cannot be shared, rotated, or left to a steering committee.</p>
+          <p><strong>Governance calibrated to the constraint that bites.</strong> Delivering restricted US-origin technology means export-control obligations shape who may touch what, where it may sit, and how it is documented — and a compliance failure does not slip the schedule, it ends the program. The discipline is to run governance tight enough to survive that audit while staying pragmatic enough to keep 1,272 GPUs moving to an immovable date. Tight on the things that end programs; light on the things that merely annoy engineers.</p>
+          <p><strong>The immovable date as an ally.</strong> The TOP500 list publishes twice a year, whether your cluster is ready or not. A genuinely fixed external date is clarifying: it forces sequencing honesty, exposes wishful float, and gives every vendor the same non-negotiable reference point. Most programs lack one — which is why strong programs manufacture equivalent forcing functions and defend them.</p>
+          <p><strong>Facilities on the critical path from day one.</strong> Data-centre power and cooling upgrades run on construction timescales, not IT timescales. I have delivered these upgrades alongside cluster builds — including for NOC and SCIF environments where security requirements multiply every lead time — and the programs that stay in control are the ones that put the facilities workstream at the top of the plan, not in an appendix.</p>
+          <p><strong>Truth moving faster than the burn rate.</strong> At $1B scale with 100+ people across multiple vendors, a reporting lag of a month means decisions are being made on stale information while millions move. The reporting machinery has to run at the program's real cadence — which, today, means automating its assembly so human attention goes into judgment, not compilation.</p>
+
+          <h2>Scaling without the drama</h2>
+          <p>None of this is exotic. It is the same delivery discipline I learned on banking platforms and telecoms networks, applied at higher stakes and shorter timelines: know which of your four programs is the constraint this month; keep one accountable view across every vendor; let the immovable date do its work; and never let the reporting fall behind the spending. The machines that made the TOP500 list did so not because the technology was heroic — it was — but because the program around the technology stayed boring, in the best possible sense, all the way to the finish line.</p>
+        </div>
+
+        <div class="takeaways reveal">
+          <h3>Practical Takeaways</h3>
+          <ol>
+            <li>Treat AI infrastructure as four programs in one — supply chain, facilities, compliance, integration — and govern all four, not just the technology.</li>
+            <li>Appoint one accountable owner of the reconciled whole, with authority to force cross-vendor trade-offs.</li>
+            <li>Calibrate governance to the constraint that ends programs (export controls, accreditation) — tight there, pragmatic everywhere else.</li>
+            <li>Put facilities and long-lead procurement at the top of the plan; they run on construction timescales, not IT ones.</li>
+            <li>Find or manufacture an immovable date, and make your reporting run faster than your burn rate.</li>
+          </ol>
+        </div>
+
+        <div class="article-backlink reveal">
+          <a href="blog.html" class="btn btn-outline">&larr; Back to the Blog</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container cta-content reveal">
+        <h2>Scaling something that cannot be allowed to drift?</h2>
+        <p>Explore how program governance fits together in the free MSP Method Map — or talk it through directly.</p>
+        <div class="cta-row">
+          <a href="https://apps.p3mai.com/msp" class="btn btn-accent">Open the MSP Method Map</a>
+          <a href="contact.html?interest=your%20Program%20Management%20services" class="btn btn-ghost">Talk to Douglas</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo-lockup"><img src="logo-triangle-white.svg" alt="P3MAI" class="footer-logo-mark"><span class="logo-text">P3M<span class="brand-ai">AI</span></span></span>
+        <p>AI Program and Project Management Delivered at Scale.</p>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>Dubai / Abu Dhabi, UAE</p>
+        <p><a href="tel:+971585383932">+971 5 85 383 932</a></p>
+        <p><a href="mailto:drcolvin@p3mai.com">drcolvin@p3mai.com</a></p>
+      </div>
+      <div class="footer-social">
+        <h4>Follow</h4>
+        <div class="social-row">
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/douglascolvin/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zm7.5 0h3.83v2.05h.05c.53-1 1.85-2.05 3.8-2.05 4.07 0 4.82 2.68 4.82 6.16V23h-4v-6.84c0-1.63-.03-3.73-2.27-3.73-2.27 0-2.62 1.77-2.62 3.6V23h-4V8z"/></svg>
+          </a>
+          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M13.5 22v-8.5h2.85l.43-3.31H13.5V8c0-.96.27-1.62 1.65-1.62h1.76V3.42C16.6 3.36 15.6 3.27 14.43 3.27c-2.45 0-4.13 1.5-4.13 4.24v2.68H7.44v3.31h2.86V22h3.2z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>&copy; 2026 P3M<span style="color:#C9A227">AI</span>. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js?v=7"></script>
+</body>
+</html>

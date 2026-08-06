@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building Web Sites and Web Apps with Claude | P3MAI</title>
+  <meta name="description" content="How p3mai.com and its suite of live web apps were designed, built, tested, and deployed with Claude as the delivery partner — the full case study, gotchas included.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=7">
+</head>
+<body>
+
+  <div class="page-transition" id="page-transition" aria-hidden="true">
+    <div class="loader-mark">P</div>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar container">
+      <a href="index.html" class="logo"><img src="logo-triangle-navy.svg" alt="P3MAI" class="logo-mark"><span class="logo-text">P3M<span class="brand-ai">AI</span></span></a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="page-hero">
+      <div class="container">
+        <h1>Building Web Sites and Web Apps with Claude: This Site Is the Case Study</h1>
+        <p class="article-meta">August 2026 &middot; Douglas Colvin<span class="tag">AI Delivery</span><span class="tag">Claude</span></p>
+      </div>
+    </section>
+
+    <section class="story-section">
+      <div class="container">
+        <div class="article-body reveal">
+          <p>The site you are reading was designed, built, tested, and deployed with Claude as the delivery partner. So was the cost estimator behind the Services page, the PMO tool at apps.p3mai.com, the P3M3 maturity assessment, and four interactive method map explorers covering PRINCE2, MSP, SAFe and PMBOK. I directed; Claude built. This article is the honest account of how that worked — including the parts that went wrong — because "AI-enabled" is a claim I make commercially, and claims should come with evidence.</p>
+
+          <h2>What got built</h2>
+          <p>In a series of part-time working sessions: a five-page marketing site with a self-serve pricing estimator; a full-stack PMO application (FastAPI and React) with dashboards, RAID registers and portfolio reporting; a citation-grounded P3M3 self-assessment; and a single config-driven codebase that serves four different method frameworks as separate live apps behind one front door. Every repository is version-controlled on GitHub; the apps deploy automatically to Render from a commit; the site deploys to conventional UK hosting.</p>
+
+          <h2>How the partnership actually works</h2>
+          <p>The working pattern is the same one I would use with any delivery team, compressed. I give a brief — sometimes two sentences, sometimes a marked-up screenshot. Claude asks structured clarifying questions before building anything substantial; for the recent repositioning of this site's copy, it interviewed me on audience, confidentiality boundaries, pricing stance and tone, drafted sample copy, and only implemented after I approved it. That sequence — <strong>brief, interview, plan, approve, build, verify</strong> — is not an AI novelty. It is how good delivery has always worked. The novelty is the cycle time: hours, not sprints.</p>
+          <p>Verification is non-negotiable. The PMO application carries sixty-one automated tests across its backend and frontend, and they run after every change. Beyond the tests, Claude drives a real browser against the running application — clicking through journeys, reading the console for errors, checking computed styles — and against the live production domain after every deployment. When I say a feature works, it has been exercised, not assumed.</p>
+
+          <h2>What went wrong — and why that's the interesting part</h2>
+          <p>Full transparency means showing the incident log, so here is a sample. A link that worked in testing silently broke when the site was opened as a local file, because a browser reports an empty hostname for file paths — the environment detection had to learn that case. A DNS record failed for half an hour because a full URL had been pasted where a bare hostname belonged. The site's CDN caches files by exact URL, so a stylesheet update appeared to vanish until the cache-busting version string was bumped — and on one occasion the verification probe itself poisoned the new cache entry by requesting it before the file had landed, a failure mode we then learned to pre-warm our way out of. A deployment round went in circles because an older zip had been extracted instead of the new one; the tell was fresh file timestamps carrying stale content.</p>
+          <p>None of these are embarrassing, because all of them were caught — by tests, by live checks, by reading response headers instead of trusting a green message. Each one produced a recorded lesson that the next session applies automatically. That is what delivery discipline looks like when the builder is an AI: <strong>the mistakes are cheap, visible, and compounding into process</strong> — exactly what a good PMO does with delivery risk.</p>
+
+          <h2>Where the human stays in charge</h2>
+          <p>Some boundaries never moved. Credentials, payments and sign-ins stay with me — Claude does not touch passwords, and the one time a hosting login was needed mid-task, the work stopped until I did it myself. Anything irreversible or outward-facing — deployments, DNS changes, publishing — happens on my explicit go. And every fact published on this site is grounded in my real record: when I asked for testimonials, the answer came back that none existed yet and fabricating them was off the table, because that rule was set at the start and the system held me to it.</p>
+
+          <h2>The upside</h2>
+          <p>The economics are the headline: a working estate — site, five applications, automated tests, monitoring, CI — built for a fraction of what an agency would quote, on a solo founder's calendar. But the quieter upside matters more to my clients: this is a live demonstration of the operating model I sell. AI does the assembly work at extraordinary speed; an experienced delivery leader directs, challenges, verifies and owns the outcome. That division of labour is exactly what I build into client PMOs — this site is simply the proof I could hand you first.</p>
+        </div>
+
+        <div class="takeaways reveal">
+          <h3>Practical Takeaways</h3>
+          <ol>
+            <li>Direct AI like a delivery team: brief, clarify, plan, approve, then build — never skip the approval gate on substantial work.</li>
+            <li>Insist on verification, not vibes: automated tests plus live checks against the running system, after every change.</li>
+            <li>Version-control everything from day one — the git history is your audit trail and your rollback plan.</li>
+            <li>Keep humans on credentials, deployments and anything irreversible. The boundary is the safety net.</li>
+            <li>Treat AI mistakes like delivery risks: surface them, diagnose the root cause, record the lesson where the next session will find it.</li>
+          </ol>
+        </div>
+
+        <div class="article-backlink reveal">
+          <a href="blog.html" class="btn btn-outline">&larr; Back to the Blog</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container cta-content reveal">
+        <h2>Want this operating model in your delivery organization?</h2>
+        <p>Start with the free tools and the estimator, or talk it through directly — the person on the CV is the person in the room.</p>
+        <div class="cta-row">
+          <a href="services.html" class="btn btn-accent">Explore the Tools &amp; Products</a>
+          <a href="contact.html?interest=AI-enabled%20delivery%20after%20reading%20the%20Claude%20case%20study" class="btn btn-ghost">Talk to Douglas</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo-lockup"><img src="logo-triangle-white.svg" alt="P3MAI" class="footer-logo-mark"><span class="logo-text">P3M<span class="brand-ai">AI</span></span></span>
+        <p>AI Program and Project Management Delivered at Scale.</p>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>Dubai / Abu Dhabi, UAE</p>
+        <p><a href="tel:+971585383932">+971 5 85 383 932</a></p>
+        <p><a href="mailto:drcolvin@p3mai.com">drcolvin@p3mai.com</a></p>
+      </div>
+      <div class="footer-social">
+        <h4>Follow</h4>
+        <div class="social-row">
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/douglascolvin/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zm7.5 0h3.83v2.05h.05c.53-1 1.85-2.05 3.8-2.05 4.07 0 4.82 2.68 4.82 6.16V23h-4v-6.84c0-1.63-.03-3.73-2.27-3.73-2.27 0-2.62 1.77-2.62 3.6V23h-4V8z"/></svg>
+          </a>
+          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M13.5 22v-8.5h2.85l.43-3.31H13.5V8c0-.96.27-1.62 1.65-1.62h1.76V3.42C16.6 3.36 15.6 3.27 14.43 3.27c-2.45 0-4.13 1.5-4.13 4.24v2.68H7.44v3.31h2.86V22h3.2z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>&copy; 2026 P3M<span style="color:#C9A227">AI</span>. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js?v=7"></script>
+</body>
+</html>
