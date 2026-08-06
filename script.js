@@ -189,6 +189,21 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (contactForm) {
+    // Context prefill: "Get in Touch" buttons across the site pass where they
+    // were clicked (?interest=...) and, from the cost estimator, the visitor's
+    // selections (?details=...). Both land in the Message field so the enquiry
+    // arrives with its context attached. Never overwrites anything already typed.
+    var ctxParams = new URLSearchParams(window.location.search);
+    var ctxInterest = ctxParams.get('interest');
+    var ctxDetails = ctxParams.get('details');
+    var ctxMessage = contactForm.querySelector('#message');
+    if (ctxMessage && !ctxMessage.value.trim() && (ctxInterest || ctxDetails)) {
+      var ctxParts = [];
+      if (ctxInterest) ctxParts.push("I'm interested in " + ctxInterest + ".");
+      if (ctxDetails) ctxParts.push(ctxDetails);
+      ctxMessage.value = ctxParts.join('\n\n');
+    }
+
     // Clear a field's error as soon as the person starts fixing it.
     ['name', 'email', 'message'].forEach(function (fieldName) {
       var input = contactForm.querySelector('#' + fieldName);

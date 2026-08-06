@@ -339,9 +339,8 @@
     font-size: 0.82rem; line-height: 1.5;
     background: rgba(201, 162, 39, 0.1); border: 1px solid rgba(201, 162, 39, 0.35);
     color: var(--color-text); text-align: center;
-    box-shadow: var(--shadow-sm); display: none;
+    box-shadow: var(--shadow-sm); display: block;
   }
-  .quote-message.visible { display: block; animation: fadeIn 0.3s ease; }
   .quote-message a { color: var(--color-primary); font-weight: 600; text-decoration: underline; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -699,7 +698,7 @@
             </div>
             <button type="button" class="quote-btn" id="quote-btn">Get a Detailed Quote</button>
             <div class="quote-message" id="quote-message">
-              Email us at <a href="mailto:drcolvin@P3MAI.com">drcolvin@P3M<span class="brand-ai">AI</span>.com</a> with your selections for a detailed proposal.
+              Takes you to the contact form with your selections already filled in.
             </div>
           </div>
         </div>
@@ -905,7 +904,36 @@
           calculate();
         }));
 
-      $('quote-btn').addEventListener('click', () => $('quote-message').classList.add('visible'));
+      /* Quote button: carry the visitor's selections to the contact form.
+         The rendered rail already holds every priced line, so the summary is
+         read from the DOM rather than re-deriving the pricing logic. Lands in
+         the contact page's Message field via ?interest= and ?details=. */
+      $('quote-btn').addEventListener('click', () => {
+        const lines = [];
+        if (!$('rail-body').querySelector('.rail-empty')) {
+          lines.push('My cost estimator selections — ' + $('rail-line').textContent + ':');
+          $('rail-body').querySelectorAll('.rail-group, .rail-row').forEach(el => {
+            if (el.classList.contains('rail-group')) {
+              lines.push('');
+              lines.push(el.textContent.trim() + ':');
+            } else {
+              const cells = el.querySelectorAll('span');
+              lines.push('- ' + cells[0].textContent.trim() +
+                         (cells[1] ? ': ' + cells[1].textContent.trim() : ''));
+            }
+          });
+          lines.push('');
+          lines.push('Estimated one-time total: ' + $('total-amount').textContent);
+          const alt = Array.from($('total-alt').children).map(s => s.textContent.trim()).join(' / ');
+          if (alt) lines.push('(' + alt + ')');
+          const monthly = $('total-monthly').textContent.trim();
+          if (monthly) lines.push('Maintenance: ' + monthly.replace(/\s+/g, ' '));
+        }
+        let url = 'contact.html?interest=' +
+          encodeURIComponent('a detailed quote for my cost estimator selections');
+        if (lines.length) url += '&details=' + encodeURIComponent(lines.join('\n'));
+        window.location.href = url;
+      });
 
       applyLine(currentLine());
       calculate();
