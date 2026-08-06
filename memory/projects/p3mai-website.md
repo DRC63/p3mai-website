@@ -18,9 +18,12 @@ Business website for P3MAI — Program, Project, and PMO Management in AI. Dougl
 ## Pages & Files
 | File | Content |
 |------|---------|
-| index.html | Hero, 3 feature cards, track-record stats (CV-sourced, not testimonials), CTA |
-| about.html | Bio from CV, photo (douglas.jpg), career timeline 1999–2025, values, certifications |
-| services.html | Program Mgmt / Project Mgmt / PMO cards + comparison table |
+| index.html | Eyebrow strap ("AI-Enabled · Sovereign · Safe · Proven") + problem-led hero, named-client strip, 3 feature cards, "The Problem We Solve" story, track-record band (named clients, no fake quote marks), 3-step ladder, dual CTA. Commented-out "What Colleagues Say" block ready for REAL testimonials only |
+| about.html | Breadth-first bio (nine industries, then AI), sovereign-and-safe credentials para (export controls, SCIF/NOC, UAE banking compliance — all CV-provable), 6-item timeline (added ENBD 2021, Emirates/dnata 2018), values, certifications |
+| services.html | 3 cards each with a "who this is for" line + Service Details link to its own page + comparison table |
+| program-management.html | Service detail: triggers → how it works → Core42 supercomputers case study → 3-way ladder (MSP map / estimator / engage) |
+| project-management.html | Service detail: triggers → how it works → ENBD fraud case study → ladder (PRINCE2 map / estimator / engage) |
+| pmo-services.html | Service detail: triggers → how it works → Core42 Responsible AI PMO + Emirates/dnata case studies → ladder (P3M3 / estimator / engage) |
 | blog.html | 3 AI/PM posts, author widget with photo, categories |
 | contact.html | Validated form, both emails/phones, Google Map (DIFC Dubai), hours |
 | calculator.html | Original simple web-project cost estimator (self-contained, real-time totals) |
@@ -41,6 +44,27 @@ Business website for P3MAI — Program, Project, and PMO Management in AI. Dougl
 - Two TOP500-ranked AI supercomputers delivered (#20 and #25 globally) at Core42/G42
 - Career: Vodafone 1999 → RBS AD Transformation £28m 2017 → Core42/G42 Responsible AI PMO 2023 → supercomputers 2024–25
 - Certifications: APM, PRINCE2, MSP, SAFe Scrum Master, Lean Six Sigma Green Belt
+
+## Copy positioning (adopted 2026-08-06, via structured interview with Douglas)
+- **Audience:** all three tiers — GCC enterprise/gov-linked orgs (primary), global blue-chips
+  delivering in the region, mid-size firms priced out of Big-4.
+- **Upsell ladder is explicit site-wide:** free tools (method maps, P3M3, estimator) → paid
+  products (templates/packs) → delivery → consulting. Products-first CTA until real
+  testimonials arrive, then pivot primary CTA to a free delivery health check.
+- **Hero:** Option A problem-led ("When the program cannot be allowed to fail") with Option B
+  as the eyebrow strap ("AI-Enabled · Sovereign · Safe · Proven").
+- **Named clients: approved by Douglas** — Core42/G42, ENBD, FAB, Emirates/dnata, Microsoft,
+  RBS, Deloitte/Maersk, Lloyds, BP, Vodafone appear on the site.
+- **Case studies:** Program → Core42 supercomputers; Project → ENBD fraud; PMO → Core42
+  Responsible AI PMO + Emirates/dnata portfolio.
+- **Cost stance:** positioning only, no numbers in prose ("no pyramid of juniors, no big-firm
+  overhead") — the estimator carries the actual numbers.
+- **Regulatory claims: CV-provable facts only** (US export controls, SCIF/NOC, UAE banking
+  compliance delivery, UAE/KSA/UK/EU jurisdictions). No named frameworks (PDPL, CBUAE etc.)
+  unless Douglas explicitly confirms he can defend them in the room.
+- **Testimonials:** none yet, NONE FABRICATED (site rule). index.html carries a commented-out
+  "What Colleagues Say" section ready to activate as real attributed quotes arrive.
+- US spelling ("program") throughout the site, even though the CV uses British.
 
 ## Conventions
 - Header/footer markup byte-identical across all 5 pages (except nav `.active` class) — verify with diff after edits

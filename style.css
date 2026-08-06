@@ -224,6 +224,30 @@ section { padding: 88px 0; }
   max-width: 560px;
   margin: 0 auto 36px;
 }
+/* Capability strapline above the hero H1 — the "hint at option B" line */
+.hero-eyebrow {
+  display: block;
+  color: var(--color-accent-light, #E8C766);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+/* Paired CTA buttons in hero and CTA bands */
+.cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+/* White-outline button for use on navy backgrounds (btn-outline is navy-on-light) */
+.btn-ghost {
+  background: transparent;
+  color: var(--color-white);
+  border: 2px solid rgba(255,255,255,0.65);
+  padding: 13px 32px;
+}
+.btn-ghost:hover {
+  background: var(--color-white);
+  color: var(--color-primary);
+  transform: translateY(-3px);
+}
 
 .page-hero {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
@@ -233,6 +257,128 @@ section { padding: 88px 0; }
 }
 .page-hero h1 { color: var(--color-white); }
 .page-hero p { color: rgba(255,255,255,0.85); max-width: 560px; margin: 14px auto 0; }
+
+/* =========================================================
+   Client strip (Home) — named past clients/employers, text only
+   ========================================================= */
+.client-strip {
+  background: var(--color-white);
+  padding: 26px 0;
+  border-bottom: 1px solid var(--color-bg-alt);
+  text-align: center;
+}
+.client-strip .strip-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+}
+.client-strip .strip-names {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  line-height: 1.9;
+}
+.client-strip .strip-names span { color: var(--color-accent-dark); padding: 0 10px; }
+
+/* =========================================================
+   Story section (Home) — the problem / approach / upside narrative
+   ========================================================= */
+.story-section { background: var(--color-white); }
+.story-copy { max-width: 760px; margin: 0 auto; }
+.story-copy p { margin-bottom: 18px; font-size: 1.04rem; line-height: 1.75; }
+.story-copy p:last-child { margin-bottom: 0; }
+.story-copy strong { color: var(--color-primary); }
+
+/* =========================================================
+   Ladder (Home + service pages) — the engagement path steps
+   ========================================================= */
+.ladder-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.ladder-step {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: 34px 28px;
+  box-shadow: var(--shadow-sm);
+  border-top: 4px solid var(--color-accent);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.ladder-step:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
+.step-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-accent-light, #E8C766);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 16px;
+}
+.ladder-step h3 { margin-bottom: 8px; }
+.ladder-step p { font-size: 0.95rem; color: var(--color-text-muted); flex-grow: 1; margin-bottom: 20px; }
+
+/* =========================================================
+   Case study (service pages) — problem / approach / upside block
+   ========================================================= */
+.case-study {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  border-left: 5px solid var(--color-accent);
+  padding: 40px 44px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.case-study h3 { margin-bottom: 22px; font-size: 1.35rem; }
+.case-study .cs-row { margin-bottom: 18px; }
+.case-study .cs-row:last-child { margin-bottom: 0; }
+.cs-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent-dark);
+  margin-bottom: 4px;
+}
+.case-study .cs-row p { margin: 0; line-height: 1.7; }
+.case-study + .case-study { margin-top: 28px; }
+
+/* =========================================================
+   Trigger list (service pages) — "when you call me" bullets
+   ========================================================= */
+.trigger-list {
+  max-width: 720px;
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
+}
+.trigger-list li {
+  background: var(--color-white);
+  border-radius: var(--radius-sm, 10px);
+  box-shadow: var(--shadow-sm);
+  padding: 16px 22px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  line-height: 1.6;
+}
+.trigger-list li::before {
+  content: "▸";
+  color: var(--color-accent-dark);
+  font-weight: 700;
+  flex-shrink: 0;
+}
 
 /* =========================================================
    Feature cards (Home)
@@ -359,7 +505,8 @@ section { padding: 88px 0; }
 .timeline {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* 6 milestones since the ENBD and Emirates/dnata entries were added */
+  grid-template-columns: repeat(6, 1fr);
   gap: 24px;
   margin-top: 48px;
 }
@@ -367,8 +514,9 @@ section { padding: 88px 0; }
   content: "";
   position: absolute;
   top: 15px;
-  left: 12.5%;
-  right: 12.5%;
+  /* half of one column width (100% / 6 / 2) so the rule spans dot-to-dot */
+  left: 8.33%;
+  right: 8.33%;
   height: 2px;
   background: var(--color-bg-alt);
   z-index: 0;
@@ -500,6 +648,7 @@ section { padding: 88px 0; }
 .pricing-card .package-name { font-size: 1.05rem; color: var(--color-text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
 .pricing-card .price { font-size: 1.4rem; font-weight: 700; color: var(--color-primary); margin-bottom: 4px; line-height: 1.3; }
 .pricing-card .price span { font-size: 0.95rem; color: var(--color-text-muted); font-weight: 500; }
+.pricing-card .who-for { font-size: 0.88rem; color: var(--color-text-muted); font-style: italic; margin: 6px 0 0; line-height: 1.5; }
 .pricing-card .feature-list { margin: 24px 0 28px; flex-grow: 1; }
 .pricing-card .feature-list li {
   padding: 9px 0;
@@ -899,6 +1048,7 @@ section { padding: 88px 0; }
   .feature-cards,
   .testimonial-grid,
   .services-grid,
+  .ladder-grid,
   .values-grid { grid-template-columns: repeat(2, 1fr); }
   .blog-layout { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -934,7 +1084,9 @@ section { padding: 88px 0; }
   .feature-cards,
   .testimonial-grid,
   .services-grid,
+  .ladder-grid,
   .values-grid { grid-template-columns: 1fr; }
+  .case-study { padding: 30px 24px; }
   .blog-card { flex-direction: column; }
   .blog-thumb { flex-basis: auto; height: 160px; }
   .footer-grid { grid-template-columns: 1fr; text-align: center; }
