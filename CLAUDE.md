@@ -28,7 +28,7 @@ Douglas Colvin (drcolvin@yahoo.com, drcolvin63@googlemail.com). Founder of P3MAI
 
 | Name | What |
 |------|------|
-| **P3MAI website** | 5-page static site (index, about, services, blog, contact) + three cost estimators. Navy/gold brand, pyramid logo. Live work in this folder. |
+| **P3MAI website** | 12-page site: 5 core pages + 3 service detail pages (program-management, project-management, pmo-services) + 4 blog article pages, plus the estimators and `contact.php` (the form REALLY emails drcolvin@p3mai.com — verified live). Every Get in Touch button carries ?interest= context; the estimator's quote button carries the full basket via ?details=. Navy/gold brand, pyramid logo. **Asset cache-busting: style.css?v=7, script.js?v=8 — bump on every change and re-upload all referencing pages; never probe the next version's URL before the file is deployed (CDN poisoning — see auto-memory).** |
 
 → Details: memory/projects/p3mai-website.md
 
