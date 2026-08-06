@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P3MAI Cost Estimator | P3MAI</title>
+<meta name="description" content="Instant estimate for Programme, Project and PMO products and services from P3MAI.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B2545'/%3E%3Cpolygon points='12,14 52,14 28,22' fill='%23E7C65C'/%3E%3Cpolygon points='12,14 30,50 28,22' fill='%23C9A227'/%3E%3Cpolygon points='52,14 30,50 28,22' fill='%238A6B14'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-primary: #0B2545;
+    --color-primary-dark: #071830;
+    --color-primary-light: #1B3F6E;
+    --color-accent: #C9A227;
+    --color-accent-dark: #A8841C;
+    --color-accent-light: #E7C65C;
+    --color-bg: #F6F7F9;
+    --color-bg-alt: #EBEDF2;
+    --color-text: #1C2B3A;
+    --color-text-muted: #5B6675;
+    --color-white: #ffffff;
+    --color-border: #E1E5EB;
+    --font-main: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --shadow-sm: 3px 3px 10px rgba(11, 37, 69, 0.08);
+    --shadow-md: 5px 5px 20px rgba(11, 37, 69, 0.12);
+    --shadow-lg: 8px 10px 32px rgba(11, 37, 69, 0.16);
+    --transition: 0.2s ease;
+  }
+
+  * , *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0; font-family: var(--font-main);
+    background: var(--color-bg); color: var(--color-text);
+    line-height: 1.5; -webkit-font-smoothing: antialiased;
+    padding: 48px 20px 80px;
+  }
+  .page-wrap { max-width: 1280px; margin: 0 auto; }
+
+  /* ---------- Two-column layout ---------- */
+  .calc-layout {
+    display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 26px; align-items: start; margin-top: 26px;
+  }
+  .summary-rail { position: sticky; top: 24px; }
+  .rail-inner {
+    background: var(--color-white); border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg); overflow: hidden;
+    max-height: calc(100vh - 48px); display: flex; flex-direction: column;
+  }
+  .rail-head {
+    padding: 18px 22px 14px; border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg); flex-shrink: 0;
+  }
+  .rail-head h3 {
+    margin: 0; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.07em;
+    text-transform: uppercase; color: var(--color-primary);
+  }
+  .rail-head .rail-line { font-size: 0.75rem; color: var(--color-text-muted); margin-top: 3px; }
+  .rail-body { padding: 16px 22px; overflow-y: auto; flex: 1 1 auto; min-height: 60px; }
+  .rail-foot { flex-shrink: 0; padding: 0 18px 18px; }
+
+  .rail-warn {
+    margin: 0 0 12px; padding: 10px 12px; border-radius: 8px;
+    background: rgba(166,43,43,0.07); border: 1px solid rgba(166,43,43,0.3);
+    color: #8E2626; font-size: 0.78rem; line-height: 1.45;
+  }
+  .rail-group {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--color-text-muted); margin: 14px 0 6px;
+  }
+  .rail-group:first-child { margin-top: 0; }
+  .rail-row {
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;
+    font-size: 0.8rem; padding: 4px 0; color: var(--color-text); line-height: 1.4;
+  }
+  .rail-row span:last-child { font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+  .rail-row.muted { color: var(--color-text-muted); }
+  .rail-row.subtotal {
+    border-top: 1px solid var(--color-border); margin-top: 6px; padding-top: 8px;
+    font-weight: 700; color: var(--color-primary);
+  }
+  .rail-empty { font-size: 0.8rem; color: var(--color-text-muted); font-style: italic; line-height: 1.5; }
+
+  /* ---------- Header ---------- */
+  .brand-bar { display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
+  .brand-bar svg { display: block; height: 46px; width: auto; }
+  .calc-header { text-align: center; margin-bottom: 26px; }
+  .calc-eyebrow {
+    display: inline-block; font-size: 0.76rem; font-weight: 600;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--color-accent-dark); background: rgba(201, 162, 39, 0.12);
+    padding: 6px 14px; border-radius: 999px; margin-bottom: 16px;
+  }
+  .calc-header h1 {
+    font-size: clamp(1.8rem, 3.6vw, 2.5rem); font-weight: 700;
+    color: var(--color-primary); margin: 0 0 10px;
+  }
+  .calc-header p { color: var(--color-text-muted); font-size: 1.05rem; margin: 0; }
+
+  /* ---------- Currency ---------- */
+  .currency-switch {
+    display: flex; justify-content: center; gap: 6px; margin: 22px auto 0;
+    background: var(--color-bg-alt); padding: 5px; border-radius: 999px;
+    width: fit-content; box-shadow: var(--shadow-sm);
+  }
+  .currency-switch button {
+    font-family: inherit; font-size: 0.85rem; font-weight: 600; border: none;
+    background: transparent; color: var(--color-text-muted);
+    padding: 8px 20px; border-radius: 999px; cursor: pointer; transition: all var(--transition);
+  }
+  .currency-switch button:hover { color: var(--color-primary); }
+  .currency-switch button.active { background: var(--color-primary); color: var(--color-white); box-shadow: var(--shadow-sm); }
+
+  /* ---------- Card / sections ---------- */
+  .calc-card {
+    background: var(--color-white); border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg); padding: 40px; margin-top: 26px;
+  }
+  .calc-section + .calc-section { margin-top: 34px; padding-top: 34px; border-top: 1px solid var(--color-border); }
+  .section-label { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .section-num {
+    display: flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--color-primary); color: var(--color-white);
+    font-size: 0.8rem; font-weight: 700; flex-shrink: 0;
+  }
+  .section-label h2 { font-size: 1.05rem; font-weight: 600; color: var(--color-primary); margin: 0; }
+  .section-hint { font-size: 0.85rem; color: var(--color-text-muted); margin: 0 0 18px 36px; }
+
+  /* ---------- Three towers ---------- */
+  .tower-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .tower-card {
+    position: relative; display: flex; flex-direction: column; gap: 6px;
+    padding: 18px 18px 16px; border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm); cursor: pointer; background: var(--color-white);
+    box-shadow: var(--shadow-sm); text-align: center;
+    transition: border-color var(--transition), background var(--transition), box-shadow var(--transition), transform var(--transition);
+  }
+  .tower-card:hover { border-color: var(--color-primary-light); transform: translateY(-2px); }
+  .tower-card.selected {
+    border-color: var(--color-primary); background: rgba(11, 37, 69, 0.04);
+    box-shadow: var(--shadow-sm), 0 0 0 3px rgba(11, 37, 69, 0.08);
+  }
+  .tower-card input { position: absolute; opacity: 0; pointer-events: none; }
+  .tower-name { font-weight: 700; font-size: 1.02rem; color: var(--color-primary); }
+  .tower-desc { font-size: 0.77rem; color: var(--color-text-muted); line-height: 1.45; min-height: 3.1em; }
+  .tower-rate {
+    margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--color-border);
+    font-size: 1.05rem; font-weight: 700; color: var(--color-primary);
+  }
+  .tower-rate small { display: block; font-size: 0.68rem; font-weight: 600; color: var(--color-text-muted); letter-spacing: 0.04em; text-transform: uppercase; margin-top: 2px; }
+  .tower-card.selected .tower-rate { color: var(--color-accent-dark); }
+
+  /* ---------- Option cards ---------- */
+  .option-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 12px; }
+  .option-grid.two-col { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  .option-grid.four-col { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .option-grid.tier-grid { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+
+  .option-card {
+    position: relative; display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 10px; padding: 16px 18px;
+    border: 2px solid var(--color-border); border-radius: var(--radius-sm);
+    cursor: pointer; overflow: hidden; background: var(--color-white); box-shadow: var(--shadow-sm);
+    transition: border-color var(--transition), background var(--transition), box-shadow var(--transition), transform var(--transition);
+  }
+  .option-card:hover { border-color: var(--color-primary-light); transform: translateY(-1px); }
+  .option-card.selected {
+    border-color: var(--color-primary); background: rgba(11, 37, 69, 0.04);
+    box-shadow: var(--shadow-sm), 0 0 0 3px rgba(11, 37, 69, 0.08);
+  }
+  .option-card input { position: absolute; opacity: 0; pointer-events: none; }
+  .option-main { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; }
+  .option-title { font-weight: 600; font-size: 0.95rem; color: var(--color-text); overflow-wrap: break-word; }
+  .option-sub { font-size: 0.78rem; color: var(--color-text-muted); overflow-wrap: break-word; line-height: 1.45; }
+  .option-price {
+    font-weight: 700; font-size: 0.9rem; color: var(--color-primary);
+    text-align: right; flex-shrink: 0; max-width: 42%; overflow-wrap: break-word; line-height: 1.35;
+  }
+  .option-price .sub-rate { display: block; font-size: 0.7rem; font-weight: 600; color: var(--color-accent-dark); margin-top: 2px; }
+  .option-card.selected .option-price { color: var(--color-accent-dark); }
+  .option-card.selected .option-price .sub-rate { color: var(--color-primary); }
+
+  /* product family heading */
+  .family-head {
+    display: flex; align-items: center; gap: 10px;
+    margin: 26px 0 12px;
+  }
+  .family-head:first-of-type { margin-top: 4px; }
+  .family-head .fh-name {
+    font-size: 0.86rem; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--color-primary); white-space: nowrap;
+  }
+  .family-head .fh-rule { flex: 1 1 auto; height: 2px; background: var(--color-accent); opacity: 0.55; border-radius: 2px; }
+  .family-head .fh-note { font-size: 0.75rem; color: var(--color-text-muted); white-space: nowrap; }
+
+  /* product family pip */
+  .rank {
+    display: inline-block; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--color-text-muted);
+    background: var(--color-bg-alt); padding: 2px 8px; border-radius: 999px; margin-bottom: 4px; align-self: flex-start;
+  }
+  .option-card.selected .rank { background: var(--color-accent); color: var(--color-primary-dark); }
+
+  /* POTI */
+  .poti-letter {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 6px; margin-bottom: 6px;
+    background: var(--color-bg-alt); color: var(--color-primary);
+    font-size: 0.78rem; font-weight: 700;
+  }
+  .option-card.selected .poti-letter { background: var(--color-accent); color: var(--color-primary-dark); }
+
+  /* ---------- Sliders ---------- */
+  .slider-box {
+    border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+    padding: 18px 20px 14px; background: var(--color-white); box-shadow: var(--shadow-sm);
+  }
+  .slider-box.licence { margin-top: 18px; background: var(--color-bg); }
+  .slider-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+  .slider-head .lab { font-weight: 600; font-size: 0.94rem; color: var(--color-text); }
+  .slider-head .val { font-weight: 700; font-size: 1.35rem; color: var(--color-primary); white-space: nowrap; }
+  .slider-head .val small { font-size: 0.78rem; font-weight: 600; color: var(--color-text-muted); margin-left: 5px; }
+  .slider-box.licence .val { color: var(--color-accent-dark); }
+  .mult-pill {
+    display: inline-block; margin-left: 8px; padding: 2px 12px; border-radius: 999px;
+    background: var(--color-primary); color: var(--color-white);
+    font-size: 0.8rem; font-weight: 700; vertical-align: middle;
+  }
+  .slider-note { font-size: 0.78rem; color: var(--color-text-muted); margin-bottom: 12px; line-height: 1.45; }
+  input[type=range] {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 6px;
+    border-radius: 999px; background: var(--color-bg-alt); outline: none; margin: 4px 0 6px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--color-accent); border: 3px solid var(--color-white);
+    box-shadow: var(--shadow-sm); cursor: pointer; transition: transform var(--transition);
+  }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.12); }
+  input[type=range]::-moz-range-thumb {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--color-accent); border: 3px solid var(--color-white);
+    box-shadow: var(--shadow-sm); cursor: pointer;
+  }
+  .slider-scale { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--color-text-muted); }
+  .licence-ticks {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    font-size: 0.72rem; color: var(--color-text-muted); text-align: center; margin-top: 2px;
+  }
+  .licence-ticks span.on { color: var(--color-primary); font-weight: 700; }
+  .licence-ticks span:first-child { text-align: left; }
+  .licence-ticks span:last-child { text-align: right; }
+  .slider-sub {
+    margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--color-border);
+    display: flex; justify-content: space-between; font-size: 0.84rem; color: var(--color-text-muted);
+  }
+  .slider-sub strong { color: var(--color-primary); font-weight: 700; }
+
+  .hidden { display: none !important; }
+
+  /* ---------- Breakdown ---------- */
+  .breakdown {
+    margin-top: 34px; background: var(--color-bg-alt);
+    border-radius: var(--radius-md); padding: 22px 26px; box-shadow: var(--shadow-sm);
+  }
+  .breakdown h3 {
+    font-size: 0.85rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--color-text-muted); margin: 0 0 14px;
+  }
+  .breakdown-row {
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+    font-size: 0.92rem; padding: 6px 0; color: var(--color-text);
+  }
+  .breakdown-row span:first-child { overflow-wrap: break-word; }
+  .breakdown-row span:last-child { font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+  .breakdown-row.sub { color: var(--color-text-muted); font-size: 0.86rem; }
+  .breakdown-row.total-line { font-weight: 700; color: var(--color-primary); }
+  .breakdown-divider { border-top: 1px solid var(--color-border); margin: 8px 0; }
+
+  /* ---------- Total ---------- */
+  .total-section {
+    margin: 0 0 14px; text-align: center;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    border-radius: var(--radius-md); padding: 22px 18px; color: var(--color-white);
+    box-shadow: var(--shadow-md);
+  }
+  .total-label {
+    font-size: 0.85rem; letter-spacing: 0.09em; text-transform: uppercase;
+    color: rgba(255,255,255,0.7); margin-bottom: 8px;
+  }
+  .total-amount { font-size: 2.05rem; font-weight: 700; color: var(--color-accent); line-height: 1.15; }
+  .total-alt {
+    margin-top: 8px; font-size: 0.78rem; color: rgba(255,255,255,0.85);
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 12px;
+  }
+  .total-alt span strong { color: var(--color-white); }
+  .total-monthly {
+    margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.16);
+    font-size: 0.78rem; color: rgba(255,255,255,0.85); line-height: 1.5;
+  }
+  .total-monthly strong { color: var(--color-accent-light); }
+
+  /* ---------- Button ---------- */
+  .quote-btn {
+    display: block; width: 100%; margin-top: 0; padding: 14px;
+    border: none; border-radius: 999px;
+    background: var(--color-accent); color: var(--color-primary-dark);
+    font-family: inherit; font-size: 0.92rem; font-weight: 600; cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  }
+  .quote-btn:hover { background: var(--color-accent-dark); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .quote-message {
+    margin-top: 12px; padding: 13px 15px; border-radius: var(--radius-sm);
+    font-size: 0.82rem; line-height: 1.5;
+    background: rgba(201, 162, 39, 0.1); border: 1px solid rgba(201, 162, 39, 0.35);
+    color: var(--color-text); text-align: center;
+    box-shadow: var(--shadow-sm); display: none;
+  }
+  .quote-message.visible { display: block; animation: fadeIn 0.3s ease; }
+  .quote-message a { color: var(--color-primary); font-weight: 600; text-decoration: underline; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .calc-footnote { text-align: center; font-size: 0.8rem; color: var(--color-text-muted); margin-top: 22px; line-height: 1.7; }
+  .calc-footnote a { color: var(--color-primary); font-weight: 600; text-decoration: none; }
+
+  @media (max-width: 1080px) {
+    .calc-layout { grid-template-columns: minmax(0, 1fr); }
+    .summary-rail { position: static; }
+    .rail-inner { max-height: none; }
+  }
+  @media (max-width: 720px) {
+    .tower-grid { grid-template-columns: 1fr; }
+    .tower-desc { min-height: 0; }
+  }
+  @media (max-width: 560px) {
+    .calc-card { padding: 28px 22px; }
+    body { padding: 32px 14px 60px; }
+    .option-price { max-width: 48%; font-size: 0.85rem; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="page-wrap">
+
+    <div class="brand-bar">
+      <svg viewBox="0 0 300 76" role="img" aria-label="P3MAI">
+        <defs>
+          <filter id="sh" x="-50%" y="-50%" width="220%" height="220%">
+            <feDropShadow dx="3" dy="5" stdDeviation="3" flood-color="#000000" flood-opacity="0.28"/>
+          </filter>
+        </defs>
+        <g filter="url(#sh)">
+          <polygon points="16,14 66,14 37,26" fill="#E7C65C"/>
+          <polygon points="16,14 41,58 37,26" fill="#C9A227"/>
+          <polygon points="66,14 41,58 37,26" fill="#8A6B14"/>
+        </g>
+        <text x="100" y="48" font-family="Poppins, 'Segoe UI', system-ui, sans-serif"
+              font-size="34" font-weight="700" fill="#0B2545">P3MAI</text>
+      </svg>
+    </div>
+
+    <div class="calc-header">
+      <span class="calc-eyebrow">Programme · Project · PMO</span>
+      <h1>P3MAI Cost Estimator</h1>
+      <p>Get an instant estimate for your requirements.</p>
+      <div class="currency-switch" role="group" aria-label="Display currency">
+        <button type="button" data-cur="AED" class="active">AED</button>
+        <button type="button" data-cur="GBP">GBP</button>
+        <button type="button" data-cur="USD">USD</button>
+      </div>
+    </div>
+
+    <div class="calc-layout">
+
+      <div class="calc-card">
+
+      <!-- ===== 1. Service line ===== -->
+      <div class="calc-section">
+        <div class="section-label"><span class="section-num">1</span><h2>Service Line</h2></div>
+        <p class="section-hint">Three towers, each with its own day rate. Your choice sets the products available below.</p>
+        <div class="tower-grid" data-group="line">
+
+          <label class="tower-card">
+            <input type="radio" name="line" value="products" checked
+                   data-label="Digital Products" data-day="600" data-monthly="250" data-days="0" data-suffix="tailoring / day">
+            <span class="tower-name">Digital Products</span>
+            <span class="tower-desc">Build once, use many times — governance assets you install and run yourself.</span>
+            <span class="tower-rate" data-rate="600" data-suffix="tailoring / day">—</span>
+          </label>
+
+          <label class="tower-card">
+            <input type="radio" name="line" value="delivery"
+                   data-label="Delivery &amp; Automation" data-day="900" data-monthly="450" data-days="0" data-suffix="delivery / day">
+            <span class="tower-name">Delivery &amp; Automation</span>
+            <span class="tower-desc">Hands-on P3M and PMO delivery, with AI automation built into the way of working.</span>
+            <span class="tower-rate" data-rate="900" data-suffix="delivery / day">—</span>
+          </label>
+
+          <label class="tower-card">
+            <input type="radio" name="line" value="consulting"
+                   data-label="Consulting" data-day="1400" data-monthly="900" data-days="0" data-suffix="advisory / day">
+            <span class="tower-name">Consulting</span>
+            <span class="tower-desc">Advice, guidance and mentoring — operating model across POTI, outputs through to value.</span>
+            <span class="tower-rate" data-rate="1400" data-suffix="advisory / day">—</span>
+          </label>
+
+        </div>
+      </div>
+
+      <!-- ===== 2. Products ===== -->
+      <div class="calc-section">
+        <div class="section-label"><span class="section-num">2</span><h2>Products</h2></div>
+        <p class="section-hint" id="product-hint">Fixed-price packs. Prices rise with complexity — select as many as you need.</p>
+
+        <div class="family-head">
+          <span class="fh-name">Digital Products</span><span class="fh-rule"></span>
+          <span class="fh-note">Deploy once, use many times</span>
+        </div>
+        <div class="option-grid two-col product-group" data-line="products">
+          <label class="option-card">
+            <input type="checkbox" name="product" value="450" data-label="Document Template Bundle">
+            <span class="option-main"><span class="rank">Digital Products</span>
+              <span class="option-title">Document Template Bundle</span>
+              <span class="option-sub">The core governance set — business case, PID, RAID, status, stage gate and board reporting templates.</span></span>
+            <span class="option-price" data-price-add="450"></span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="product" value="850" data-label="Document Worked Example Bundle">
+            <span class="option-main"><span class="rank">Digital Products</span>
+              <span class="option-title">Worked Example Bundle</span>
+              <span class="option-sub">The same artefacts populated from real delivery — what good actually looks like, not a blank form.</span></span>
+            <span class="option-price" data-price-add="850"></span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="product" value="1450" data-label="Framework Mapping Bundle">
+            <span class="option-main"><span class="rank">Digital Products</span>
+              <span class="option-title">Framework Mapping Bundle</span>
+              <span class="option-sub">PRINCE2, MSP, SAFe and PMBOK mapped onto each other and onto your own gates and language.</span></span>
+            <span class="option-price" data-price-add="1450"></span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="product" value="2400" data-label="Delivery Process Pack">
+            <span class="option-main"><span class="rank">Digital Products</span>
+              <span class="option-title">Delivery Process Pack</span>
+              <span class="option-sub">End-to-end business and delivery processes, RACI and workflow definitions that make governance run.</span></span>
+            <span class="option-price" data-price-add="2400"></span>
+          </label>
+        </div>
+
+        <div class="family-head">
+          <span class="fh-name">Delivery &amp; Automation Products</span><span class="fh-rule"></span>
+          <span class="fh-note">Functional Tooling</span>
+        </div>
+        <div class="option-grid two-col product-group" data-line="delivery">
+          <label class="option-card">
+            <input type="checkbox" name="product" value="1800" data-label="Requirements Gathering Pack">
+            <span class="option-main"><span class="rank">Delivery &amp; Automation</span>
+              <span class="option-title">Requirements Gathering Pack</span>
+              <span class="option-sub">Establish what is actually needed, from whom, and what "done" means before anything is committed.</span></span>
+            <span class="option-price" data-price-add="1800"></span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="product" value="3200" data-label="Initiation Pack">
+            <span class="option-main"><span class="rank">Delivery &amp; Automation</span>
+              <span class="option-title">Initiation Pack</span>
+              <span class="option-sub">Stand up the portfolio, programme, project or PMO from a standing start — structure, governance, cadence.</span></span>
+            <span class="option-price" data-price-add="3200"></span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="product" value="4800" data-label="Audit Pack">
+            <span class="option-main"><span class="rank">Delivery &amp; Automation</span>
+              <span class="option-title">Audit Pack</span>
+              <span class="option-sub">Independent assessment of where delivery actually is, against where it is being reported to be.</span></span>
+            <span class="option-price" data-price-add="4800"></span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="product" value="6800" data-label="Recovery Pack">
+            <span class="option-main"><span class="rank">Delivery &amp; Automation</span>
+              <span class="option-title">Recovery Pack</span>
+              <span class="option-sub">Take hold of delivery in trouble, stabilise it, and bring it back to a controlled, reportable position.</span></span>
+            <span class="option-price" data-price-add="6800"></span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="product" value="9500" data-label="Acceleration Pack">
+            <span class="option-main"><span class="rank">Delivery &amp; Automation</span>
+              <span class="option-title">Acceleration Pack</span>
+              <span class="option-sub">Remove the drag and lift throughput — automation of reporting, RAID and decision flow, without adding headcount.</span></span>
+            <span class="option-price" data-price-add="9500"></span>
+          </label>
+        </div>
+
+        <div class="family-head">
+          <span class="fh-name">Consulting Products</span><span class="fh-rule"></span>
+          <span class="fh-note">Priced per POTI dimension</span>
+        </div>
+        <div class="option-grid two-col product-group" data-line="consulting">
+          <label class="option-card">
+            <input type="checkbox" name="product" value="2400" data-label="Design">
+            <span class="option-main"><span class="rank">Consulting · per POTI dimension</span>
+              <span class="option-title">Design</span>
+              <span class="option-sub">Design the target operating model for each dimension you select in section 3 — how the organisation delivers, not just what.</span></span>
+            <span class="option-price" data-price-add="2400" data-per-poti="1"></span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="product" value="1600" data-label="Training">
+            <span class="option-main"><span class="rank">Consulting · per POTI dimension</span>
+              <span class="option-title">Training</span>
+              <span class="option-sub">Take your people through the designed model so they can run it — workshops and materials per dimension.</span></span>
+            <span class="option-price" data-price-add="1600" data-per-poti="1"></span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="product" value="1200" data-label="Mentoring">
+            <span class="option-main"><span class="rank">Consulting · per POTI dimension</span>
+              <span class="option-title">Mentoring</span>
+              <span class="option-sub">Ongoing guidance for your programme and PMO leads as they operate the model in the real world.</span></span>
+            <span class="option-price" data-price-add="1200" data-per-poti="1"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ===== 3. POTI (consulting only) ===== -->
+      <div class="calc-section" id="poti-section">
+        <div class="section-label"><span class="section-num">3</span><h2>POTI Coverage</h2></div>
+        <p class="section-hint">Applies to the <strong>Consulting products</strong> above — each is priced per dimension selected here. Integration across all four is where most of the value sits.</p>
+        <div class="option-grid four-col" data-group="poti">
+          <label class="option-card">
+            <input type="checkbox" name="poti" value="1" data-label="Processes" checked>
+            <span class="option-main"><span class="poti-letter">P</span>
+              <span class="option-title">Processes</span>
+              <span class="option-sub">How delivery and governance run, end to end.</span></span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="poti" value="1" data-label="Organization">
+            <span class="option-main"><span class="poti-letter">O</span>
+              <span class="option-title">Organization</span>
+              <span class="option-sub">Roles, accountabilities, structure and decision rights.</span></span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="poti" value="1" data-label="Technology">
+            <span class="option-main"><span class="poti-letter">T</span>
+              <span class="option-title">Technology</span>
+              <span class="option-sub">Tooling, integration and the AI capability on top.</span></span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="poti" value="1" data-label="Information">
+            <span class="option-main"><span class="poti-letter">I</span>
+              <span class="option-title">Information</span>
+              <span class="option-sub">Data, reporting and the single version of the truth.</span></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ===== 4. Engagement horizon = maintenance window ===== -->
+      <div class="calc-section">
+        <div class="section-label"><span class="section-num">4</span><h2>Engagement Horizon</h2></div>
+        <p class="section-hint" id="horizon-hint">The maintenance and support window after handover, charged at the monthly rate for your service line.</p>
+        <div class="option-grid" data-group="horizon">
+          <label class="option-card">
+            <input type="radio" name="horizon" value="0" data-label="No maintenance window" checked>
+            <span class="option-main"><span class="option-title">Handover only</span>
+              <span class="option-sub">Delivered, documented and closed. No ongoing support.</span></span>
+            <span class="option-price">No charge</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="horizon" value="3" data-label="Operational — 3 months">
+            <span class="option-main"><span class="option-title">Operational</span>
+              <span class="option-sub">3 months — bed it in and fix what surfaces in the first cycles.</span></span>
+            <span class="option-price horizon-price" data-months="3"></span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="horizon" value="12" data-label="Tactical — 12 months">
+            <span class="option-main"><span class="option-title">Tactical</span>
+              <span class="option-sub">12 months — embed the way of working across a full annual cycle.</span></span>
+            <span class="option-price horizon-price" data-months="12"></span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="horizon" value="24" data-label="Strategic — 24 months">
+            <span class="option-main"><span class="option-title">Strategic</span>
+              <span class="option-sub">24 months — capability, maturity and value realisation at organisation level.</span></span>
+            <span class="option-price horizon-price" data-months="24"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ===== 5. Effort & scale ===== -->
+      <div class="calc-section">
+        <div class="section-label"><span class="section-num">5</span><h2>Effort &amp; Scale</h2></div>
+        <p class="section-hint">Service days are charged at your service line rate. The product tier and licence multipliers both apply to the product price.</p>
+
+        <div class="slider-box">
+          <div class="slider-head">
+            <span class="lab">Days of engagement</span>
+            <span class="val"><span id="days-val">0</span><small>days</small></span>
+          </div>
+          <p class="slider-note" id="days-note"></p>
+          <input type="range" id="days" min="0" max="60" step="1" value="0">
+          <div class="slider-scale"><span>0</span><span>30</span><span>60</span></div>
+          <div class="slider-sub"><span id="days-calc">—</span><strong id="days-total">—</strong></div>
+        </div>
+
+        <div style="margin-top:18px">
+          <p class="section-hint" style="margin-left:0; margin-bottom:12px;"><strong>Product tier</strong> — what is included with each product.</p>
+          <div class="option-grid tier-grid" data-group="tier">
+            <label class="option-card">
+              <input type="radio" name="tier" value="1" data-label="Standard tier (×1)" checked>
+              <span class="option-main"><span class="option-title">Standard</span>
+                <span class="option-sub">Product installation and documentation.</span></span>
+              <span class="option-price">×1</span>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="tier" value="2" data-label="Enhanced tier (×2)">
+              <span class="option-main"><span class="option-title">Enhanced</span>
+                <span class="option-sub">Installation, documentation and training.</span></span>
+              <span class="option-price">×2</span>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="tier" value="4" data-label="Tailored tier (×4)">
+              <span class="option-main"><span class="option-title">Tailored</span>
+                <span class="option-sub">Installation, documentation, training and full tailoring to your organisation.</span></span>
+              <span class="option-price">×4</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="slider-box licence">
+          <div class="slider-head">
+            <span class="lab">Licence scale — instances in the organisation</span>
+            <span class="val"><span id="lic-val">Solo</span><span class="mult-pill" id="lic-mult">×1</span></span>
+          </div>
+          <p class="slider-note" id="lic-note"></p>
+          <input type="range" id="licence" min="0" max="4" step="1" value="0">
+          <div class="licence-ticks" id="lic-ticks">
+            <span>Solo</span><span>Small</span><span>Medium</span><span>Large</span><span>Enterprise</span>
+          </div>
+          <div class="slider-sub"><span id="lic-calc">—</span><strong id="lic-total">—</strong></div>
+        </div>
+      </div>
+
+      <!-- ===== 6. Mobilisation & delivery timeline ===== -->
+      <div class="calc-section">
+        <div class="section-label"><span class="section-num">6</span><h2>Mobilisation Timeline</h2></div>
+        <p class="section-hint">How quickly we mobilise. The uplift applies to the <strong>service days only</strong> — product prices are unaffected.</p>
+        <div class="option-grid" data-group="timeline">
+          <label class="option-card">
+            <input type="radio" name="timeline" value="0" data-label="Planned" checked>
+            <span class="option-main"><span class="option-title">Planned</span>
+              <span class="option-sub">Scheduled start, normal delivery cadence.</span></span>
+            <span class="option-price">No extra cost</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="timeline" value="0.3" data-label="Priority">
+            <span class="option-main"><span class="option-title">Priority</span>
+              <span class="option-sub">Mobilised within two weeks, compressed delivery.</span></span>
+            <span class="option-price">+30%</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="timeline" value="0.6" data-label="Immediate">
+            <span class="option-main"><span class="option-title">Immediate</span>
+              <span class="option-sub">On site within days, maximum compression.</span></span>
+            <span class="option-price">+60%</span>
+          </label>
+        </div>
+      </div>
+
+      </div><!-- /calc-card -->
+
+      <!-- ===== Summary rail ===== -->
+      <aside class="summary-rail">
+        <div class="rail-inner">
+          <div class="rail-head">
+            <h3>Estimate Breakdown</h3>
+            <div class="rail-line" id="rail-line">—</div>
+          </div>
+
+          <div class="rail-body" id="rail-body"></div>
+
+          <div class="rail-foot">
+            <div class="total-section">
+              <div class="total-label">Estimated Total</div>
+              <div class="total-amount" id="total-amount">—</div>
+              <div class="total-alt" id="total-alt"></div>
+              <div class="total-monthly" id="total-monthly"></div>
+            </div>
+            <button type="button" class="quote-btn" id="quote-btn">Get a Detailed Quote</button>
+            <div class="quote-message" id="quote-message">
+              Email us at <a href="mailto:drcolvin@P3MAI.com">drcolvin@P3MAI.com</a> with your selections for a detailed proposal.
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div><!-- /calc-layout -->
+
+    <p class="calc-footnote">
+      Indicative estimate only. Final pricing is confirmed after a scoping conversation.<br>
+      Converted at USD 1 = AED 3.6725 and USD 1 = GBP 0.7434.
+      <a href="index.html">P3MAI</a> · Programme, Project and PMO Management · Dubai / Abu Dhabi, UAE
+    </p>
+
+  </div>
+
+  <script>
+    (function () {
+      const RATES  = { USD: 1, AED: 3.6725, GBP: 0.7434 };
+      const SYMBOL = { USD: '$', AED: 'AED ', GBP: '£' };
+      let currency = 'AED';
+
+      const LICENCE = [
+        { name: 'Solo',       mult: 1, desc: 'a single instance — one team, one practice, one copy in use' },
+        { name: 'Small',      mult: 2, desc: 'a small number of instances — one department or delivery function' },
+        { name: 'Medium',     mult: 3, desc: 'several instances across functions or a portfolio' },
+        { name: 'Large',      mult: 5, desc: 'many instances across divisions, with formal governance and assurance' },
+        { name: 'Enterprise', mult: 8, desc: 'unlimited instances — organisation-wide, multi-country deployment' }
+      ];
+
+      const $ = id => document.getElementById(id);
+      const daysEl = $('days'), licEl = $('licence');
+
+      const convert = (usd, cur) => Math.round(usd * RATES[cur] / 5) * 5;
+      const fmt = (usd, cur) => SYMBOL[cur || currency] + convert(usd, cur || currency).toLocaleString('en-US');
+
+      const currentLine = () => document.querySelector('input[name="line"]:checked');
+      const potiCount = () => document.querySelectorAll('input[name="poti"]:checked').length;
+
+      /* ---- price chips ---- */
+      function paintPrices() {
+        document.querySelectorAll('.tower-rate').forEach(el => {
+          el.innerHTML = fmt(parseFloat(el.dataset.rate)) + '<small>' + el.dataset.suffix + '</small>';
+        });
+        document.querySelectorAll('.option-price[data-price-add]').forEach(el => {
+          const v = fmt(parseFloat(el.dataset.priceAdd));
+          el.innerHTML = el.dataset.perPoti ? v + '<span class="sub-rate">per dimension</span>' : v;
+        });
+        const line = currentLine();
+        const mo = parseFloat(line.dataset.monthly);
+        document.querySelectorAll('.horizon-price').forEach(el => {
+          const m = parseInt(el.dataset.months, 10);
+          el.innerHTML = fmt(mo * m) + '<span class="sub-rate">' + fmt(mo) + ' × ' + m + ' mo</span>';
+        });
+      }
+
+      function updateCardStates() {
+        document.querySelectorAll('.option-card, .tower-card').forEach(c => {
+          const i = c.querySelector('input');
+          c.classList.toggle('selected', i.checked && !c.closest('.hidden'));
+        });
+      }
+
+      /* ---- swap product group when the tower changes ---- */
+      function applyLine(line) {
+        daysEl.value = line.dataset.days;
+        $('horizon-hint').textContent =
+          'The maintenance and support window after handover, charged at the ' +
+          line.dataset.label + ' monthly rate of ' + fmt(parseFloat(line.dataset.monthly)) + '.';
+      }
+
+      /* ---- the calculation ---- */
+      function calculate() {
+        const line     = currentLine();
+        const dayRate  = parseFloat(line.dataset.day);
+        const monthly  = parseFloat(line.dataset.monthly);
+        const days     = parseInt(daysEl.value, 10);
+        const tier     = document.querySelector('input[name="tier"]:checked');
+        const tierMult = parseFloat(tier.value);
+        const lic      = LICENCE[parseInt(licEl.value, 10)];
+        const nPoti    = potiCount();
+
+        /* ---------- products ---------- */
+        const productRows = [];
+        let productBase = 0, orphanConsulting = false;
+
+        document.querySelectorAll('input[name="product"]:checked').forEach(i => {
+          const unit    = parseFloat(i.value);
+          const perPoti = i.closest('.option-card').querySelector('.option-price').dataset.perPoti;
+          if (perPoti && nPoti === 0) { orphanConsulting = true; return; }
+          const amt = perPoti ? unit * nPoti : unit;
+          productBase += amt;
+          productRows.push({
+            label: i.dataset.label + (perPoti ? ' × ' + nPoti + ' POTI' : ''),
+            amount: amt
+          });
+        });
+
+        const afterTier   = productBase * tierMult;
+        const productCost = afterTier * lic.mult;
+
+        /* ---------- services ---------- */
+        const effortCost = days * dayRate;
+        const timeline   = document.querySelector('input[name="timeline"]:checked');
+        const tRate      = parseFloat(timeline.value);
+        const surcharge  = Math.round(effortCost * tRate);
+        const serviceCost = effortCost + surcharge;
+
+        const oneTime = productCost + serviceCost;
+
+        /* ---------- maintenance ---------- */
+        const horizon    = document.querySelector('input[name="horizon"]:checked');
+        const months     = parseInt(horizon.value, 10);
+        const maintTotal = months * monthly;
+
+        /* ---------- slider read-outs ---------- */
+        $('days-val').textContent   = days;
+        $('days-note').textContent  = 'Charged at the ' + line.dataset.label + ' rate of ' + fmt(dayRate) + ' per day.';
+        $('days-calc').textContent  = days + ' × ' + fmt(dayRate);
+        $('days-total').textContent = fmt(effortCost);
+
+        $('lic-val').textContent  = lic.name;
+        $('lic-mult').textContent = '×' + lic.mult;
+        $('lic-note').textContent = lic.name + ' — ' + lic.desc +
+          '. Multiplies the product price by ' + lic.mult + '. Service days and maintenance are unaffected.';
+        $('lic-calc').textContent  = fmt(afterTier) + ' × ' + lic.mult;
+        $('lic-total').textContent = fmt(productCost);
+        Array.from($('lic-ticks').children).forEach((t, i) =>
+          t.classList.toggle('on', i === parseInt(licEl.value, 10)));
+
+        /* ---------- rail ---------- */
+        $('rail-line').textContent =
+          line.dataset.label + ' · ' + tier.dataset.label.replace(/ tier.*/, '') + ' tier · ' + lic.name + ' licence';
+
+        let h = '';
+        if (orphanConsulting) {
+          h += '<p class="rail-warn">Consulting products are priced per POTI dimension. ' +
+               'Select at least one dimension in section 3, or they cannot be costed.</p>';
+        }
+
+        if (productRows.length) {
+          h += '<div class="rail-group">Products</div>';
+          productRows.forEach(r => {
+            h += '<div class="rail-row"><span>' + r.label + '</span><span>' + fmt(r.amount) + '</span></div>';
+          });
+          if (tierMult > 1) {
+            h += '<div class="rail-row muted"><span>' + tier.dataset.label.replace(/ \(.*/, '') +
+                 ' tier ×' + tierMult + '</span><span>+ ' + fmt(afterTier - productBase) + '</span></div>';
+          }
+          if (lic.mult > 1) {
+            h += '<div class="rail-row muted"><span>' + lic.name + ' licence ×' + lic.mult +
+                 '</span><span>+ ' + fmt(productCost - afterTier) + '</span></div>';
+          }
+          h += '<div class="rail-row subtotal"><span>Products subtotal</span><span>' + fmt(productCost) + '</span></div>';
+        }
+
+        if (days > 0) {
+          h += '<div class="rail-group">Services</div>';
+          h += '<div class="rail-row"><span>' + days + ' days @ ' + fmt(dayRate) + '</span><span>' + fmt(effortCost) + '</span></div>';
+          if (surcharge > 0) {
+            h += '<div class="rail-row muted"><span>' + timeline.dataset.label + ' mobilisation +' +
+                 Math.round(tRate * 100) + '%</span><span>+ ' + fmt(surcharge) + '</span></div>';
+          }
+          h += '<div class="rail-row subtotal"><span>Services subtotal</span><span>' + fmt(serviceCost) + '</span></div>';
+        }
+
+        if (months > 0) {
+          h += '<div class="rail-group">Maintenance</div>';
+          h += '<div class="rail-row"><span>' + horizon.dataset.label + '</span><span>' + fmt(monthly) + ' / mo</span></div>';
+          h += '<div class="rail-row subtotal"><span>' + months + ' months</span><span>' + fmt(maintTotal) + '</span></div>';
+        }
+
+        if (!productRows.length && days === 0 && months === 0 && !orphanConsulting) {
+          h = '<p class="rail-empty">Nothing selected yet. Choose products in section 2, or set the days slider in section 5, and the estimate will build here.</p>';
+        }
+        $('rail-body').innerHTML = h;
+
+        /* ---------- totals ---------- */
+        $('total-amount').textContent = fmt(oneTime);
+        const others = Object.keys(RATES).filter(c => c !== currency);
+        $('total-alt').innerHTML = others.map(c => '<span>' + c + ' <strong>' + fmt(oneTime, c) + '</strong></span>').join('');
+        $('total-monthly').innerHTML = months > 0
+          ? 'plus <strong>' + fmt(monthly) + ' / month</strong> for ' + months + ' months<br>' +
+            '<strong>' + fmt(maintTotal) + '</strong> over the window'
+          : '';
+
+        paintPrices();
+        updateCardStates();
+      }
+
+      /* ---- wiring ---- */
+      document.querySelectorAll('input[name="line"]').forEach(r =>
+        r.addEventListener('change', function () { applyLine(this); calculate(); }));
+
+      document.querySelectorAll('input[name="product"], input[name="poti"], input[name="horizon"], input[name="tier"], input[name="timeline"]')
+        .forEach(i => i.addEventListener('change', calculate));
+
+      [daysEl, licEl].forEach(s => s.addEventListener('input', calculate));
+
+      document.querySelectorAll('.currency-switch button').forEach(btn =>
+        btn.addEventListener('click', function () {
+          currency = this.dataset.cur;
+          document.querySelectorAll('.currency-switch button').forEach(b => b.classList.toggle('active', b === this));
+          calculate();
+        }));
+
+      $('quote-btn').addEventListener('click', () => $('quote-message').classList.add('visible'));
+
+      applyLine(currentLine());
+      calculate();
+    })();
+  </script>
+
+</body>
+</html>

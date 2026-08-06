@@ -5,9 +5,16 @@
   `memory/projects/p3mai-website.md` (§Hosting); remove any internal notes/CV/screenshots
   that were uploaded with the whole-folder drop.
 
+- [ ] **Start the content layer** — the identified gap in the revenue stack. One primary platform
+  (LinkedIn), specific results-led posts drawn from real delivery (Core42 supercomputers, RBS AD
+  transformation, the PMO builds). See `memory/approach/route-to-market.md`.
+- [ ] Give each app a named audience, named problem and three-tier price (Layer 2 productising).
+
 ## Waiting On
 
 ## Someday
+- [ ] Reposition the site to lead with strategy and outcomes rather than a service list
+  (freelancer → consultant positioning shift).
 - [ ] Clean up superseded files in the folder (logo-icon.svg, logo-navy.svg, logo-white.svg,
   image0–4.jpeg, me.jpg if no longer needed).
 

@@ -21,12 +21,14 @@ Douglas Colvin (drcolvin@yahoo.com, drcolvin63@googlemail.com). Founder of P3MAI
 | Method Map | Config-driven method explorer at `../claude-code/method-map/`. **FOUR frameworks live**, each its own Render service from one codebase: **PRINCE2** `/prince2`, **MSP** `/msp`, **SAFe** `/safe`, **PMBOK** `/pmbok` (all under `apps.p3mai.com`). Services-page buttons: Project Management card has PRINCE2 + SAFe + PMBOK; Programme card has MSP. Env-aware in `script.js` (localhost → `apps.p3mai.com/<slug>`). |
 | P3M3 Assessment | P3M3 PMO Maturity self-assessment at `../claude-code/p3m3-assessment/` — Services page PMO card → "P3M3 Maturity Assessment" button. **Live at `apps.p3mai.com/p3m3`.** |
 | **portfolio strategy** | Cross-app commercial plan (market research, MoSCoW backlog, roadmap) lives at `../P3MAI-Portfolio/` — the layer above all the individual projects. |
+| **route to market** | The adopted commercial framework for the site and the apps — revenue stack, value-based pricing, productising, three-tier offers, delivery workflows. **Consult before deciding what to build, how to price it, or how to package it.** → `memory/approach/route-to-market.md` (source doc: `reference/`). |
+| **the estimators** | Two self-serve pricing calculators. `p3mai_services_cost_estimator.html` is the **primary** one — the real P3MAI service catalogue (three towers, twelve products, POTI, licensing). `p3mai_cost_estimator.html` is an earlier generic AI-services version, superseded but retained. `calculator.html` is the original simple web-project estimator. **Pricing model documented in `memory/approach/pricing-model.md`.** |
 
 ## Projects
 
 | Name | What |
 |------|------|
-| **P3MAI website** | 5-page static site (index, about, services, blog, contact) + calculator.html. Navy/gold brand, pyramid logo. Live work in this folder. |
+| **P3MAI website** | 5-page static site (index, about, services, blog, contact) + three cost estimators. Navy/gold brand, pyramid logo. Live work in this folder. |
 
 → Details: memory/projects/p3mai-website.md
 
@@ -34,6 +36,12 @@ Douglas Colvin (drcolvin@yahoo.com, drcolvin63@googlemail.com). Founder of P3MAI
 - Concise, direct communication — minimal unnecessary explanation.
 - No fabricated content on the real business site (no fake testimonials, addresses, or claims — everything grounded in the CV).
 - Logo must remain original artwork (no copyright infringement).
+- Prices in **both AED and GBP** (see the `aed-prices` skill).
+- **Build and commercial decisions follow `memory/approach/route-to-market.md`** — value-based
+  pricing, named-audience specificity, three-tier offers, validate small before investing.
+- Branded documents: navy/gold cover with the pyramid banner, contents page with real page numbers,
+  pyramid + P3MAI in every header and footer, "Page X of Y". Build script pattern kept in
+  `reference/` (two-pass: render → read page numbers → rebuild contents).
 
 ---
 *History: this site began as a fictional "Bright Path Coaching" build (see memory/projects/bright-path-coaching.md), fully rebranded to P3MAI in July 2026.*

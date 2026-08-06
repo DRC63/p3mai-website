@@ -23,7 +23,9 @@ Business website for P3MAI — Program, Project, and PMO Management in AI. Dougl
 | services.html | Program Mgmt / Project Mgmt / PMO cards + comparison table |
 | blog.html | 3 AI/PM posts, author widget with photo, categories |
 | contact.html | Validated form, both emails/phones, Google Map (DIFC Dubai), hours |
-| calculator.html | Standalone project cost estimator (self-contained HTML/CSS/JS, real-time totals) |
+| calculator.html | Original simple web-project cost estimator (self-contained, real-time totals) |
+| **p3mai_services_cost_estimator.html** | **The primary estimator** — real P3MAI service catalogue. Three towers, twelve fixed-price products in three families, POTI multiplier for consulting, product tier and licence multipliers, costed maintenance window, sticky summary rail, AED/GBP/USD. **Pricing logic: `memory/approach/pricing-model.md`.** |
+| p3mai_cost_estimator.html | Earlier generic AI-services estimator (freelancing / content / products / automation / consulting). Superseded by the services estimator but retained. |
 | style.css / script.js | Shared design system + interactions (sticky nav, hamburger, reveal animations, page transitions, form validation) |
 | douglas.jpg | Headshot — Adobe-processed (auto-tone + background removed onto `#F6F7F9`), used on About + blog sidebar |
 
@@ -92,6 +94,25 @@ hardcoded production URLs; that breaks local dev.
 `script.js`, bump the query version in services.html (`script.js?v=N`) or the old file keeps
 serving. Currently at `?v=2`.
 
+## The services cost estimator (built 2026-08-05)
+`p3mai_services_cost_estimator.html` is the productised expression of the route-to-market work —
+it turns the service catalogue into something a prospect can price themselves. Structure and all
+rates are in `memory/approach/pricing-model.md`; **change that file and the estimator together.**
+Verified by a 55-check suite (structure, defaults, wiring, pricing logic, reconciliation,
+boundaries). Two open commercial decisions are logged at the foot of the pricing-model file:
+whether the licence multiplier should apply to consulting products, and whether to cap the
+compounding tier × licence multiplier at the top end.
+
+## Commercial framework (adopted 2026-08-05)
+The route-to-market approach guiding what gets built, how it is priced and how it is packaged is in
+`memory/approach/route-to-market.md`. Source material: `reference/Book 5 - Making Money with Claude
+- Summary.docx` — a 30-page branded summary (25 original diagrams, AED/GBP conversion tables).
+Key implications already identified for this estate: the site is the service-overview and
+case-study layer and should lead with outcomes rather than capability lists; the apps are Layer 2
+digital products and each needs a named audience, named problem and eventual three-tier price;
+the P3M3 assessment is the natural free-audit lead magnet; and **the content layer (LinkedIn) is
+the current gap**, not the offering.
+
 ## Version control
 Git repo initialized 2026-07-28, pushed to `https://github.com/DRC63/p3mai-website` (private).
 Local commit identity is set per-repo (Douglas Colvin / drcolvin@yahoo.com), not global.
@@ -114,7 +135,8 @@ logo-triangle-navy.svg, logo-triangle-white.svg, logo-triangle-icon.svg,
 douglas.jpg
 blog-thumb-agentic.jpg, blog-thumb-pmo.jpg, blog-thumb-scale.jpg
 ```
-Never upload: the CV and working `.docx` files, `CLAUDE.md`/`TASKS.md`/`memory/`/`.git/`
+Never upload: the CV and working `.docx` files, `reference/` (internal reading summaries and
+planning material), `CLAUDE.md`/`TASKS.md`/`memory/`/`.git/`
 (internal notes + git history), the internal screenshot JPEGs (`Douglas Colvin.JPG`,
 `Overview.jpeg`, `Progress.jpeg`, `Risks.JPG`, `Status Report *.JPG`, `Tasks A.jpeg`,
 `Tracker.jpeg`), or the superseded logo/photo files listed under Conventions above. None of

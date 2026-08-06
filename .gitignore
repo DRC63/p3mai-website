@@ -10,3 +10,7 @@ desktop.ini
 .env
 .env.*
 !.env.example
+
+# Internal reading summaries / planning binaries — large, and derived from
+# third-party published material. Kept locally, never published or committed.
+reference/
