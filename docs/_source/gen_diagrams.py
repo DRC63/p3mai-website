@@ -41,41 +41,59 @@ def save(f, name):
     plt.close(f); print("wrote", name)
 
 
-# 1. Site map
+# 1. Site map — 12 pages + estimator + the six-app front door
 f, ax = fig()
-ax.text(6, 7.6, "P3MAI Website — Site Map", ha="center", fontsize=15, fontweight="bold", color=NAVY)
-box(ax, 4.6, 6.0, 2.8, 1.0, "Home (index)", fill=NAVY)
+ax.text(6, 7.7, "P3MAI Website — Site Map", ha="center", fontsize=15, fontweight="bold", color=NAVY)
+box(ax, 4.6, 6.3, 2.8, 0.9, "Home (index)", fill=NAVY)
 pages = [("About", 0.4), ("Services", 3.15), ("Blog", 5.9), ("Contact", 8.65)]
 for name, x in pages:
-    box(ax, x, 3.9, 2.4, 0.95, name, fill=STEEL, fs=11)
-    arrow(ax, 6.0, 6.0, x + 1.2, 4.85, color=GREY, style="-|>")
-# services children
-box(ax, 2.6, 1.9, 3.4, 0.9, "PMO app — 'Example'", fill=GREEN, fs=9, sub="app.p3mai.com")
-box(ax, 6.4, 1.9, 3.4, 0.9, "Method Map", fill=GOLDD, fs=9, sub="prince2.p3mai.com")
-arrow(ax, 4.1, 3.9, 4.0, 2.8, color=STEEL, style="-|>")
-arrow(ax, 4.5, 3.9, 8.0, 2.8, color=STEEL, style="-|>")
-box(ax, 4.4, 0.4, 3.2, 0.9, "Cost Estimator (calculator)", fill=PURPLE, fs=9, sub="standalone tool")
-ax.text(6, 0.02, "Shared navy/gold header & footer on every page. A standalone Project Cost Estimator sits outside the main nav.",
+    box(ax, x, 4.7, 2.4, 0.85, name, fill=STEEL, fs=11)
+    arrow(ax, 6.0, 6.3, x + 1.2, 5.55, color=GREY, style="-|>")
+# services children: 3 detail pages + estimator + the apps hub
+box(ax, 0.3, 3.0, 3.6, 0.85, "3 service detail pages", fill=NAVYL, fs=9,
+    sub="program · project · pmo")
+box(ax, 4.15, 3.0, 3.3, 0.85, "Services Cost Estimator", fill=PURPLE, fs=9,
+    sub="quote → contact form")
+box(ax, 7.75, 3.0, 4.0, 0.85, "apps.p3mai.com front door", fill=GREEN, fs=9,
+    sub="pmo · p3m3 · prince2 · msp · safe · pmbok")
+arrow(ax, 3.9, 4.7, 2.1, 3.85, color=STEEL, style="-|>")
+arrow(ax, 4.35, 4.7, 5.8, 3.85, color=STEEL, style="-|>")
+arrow(ax, 4.8, 4.7, 9.7, 3.85, color=STEEL, style="-|>")
+# blog children + contact backend
+box(ax, 4.6, 1.4, 3.4, 0.85, "4 full articles", fill=GOLDD, fs=9,
+    sub="Claude build · PMO day one · scaling AI · agentic AI")
+arrow(ax, 7.1, 4.7, 6.3, 2.25, color=GREY, style="-|>")
+box(ax, 8.65, 1.4, 3.0, 0.85, "contact.php", fill=RED, fs=9,
+    sub="emails drcolvin@p3mai.com")
+arrow(ax, 9.85, 4.7, 10.1, 2.25, color=GREY, style="-|>")
+ax.text(6, 0.55, "Shared navy/gold shell on every page. Get in Touch buttons carry ?interest= context;",
+        ha="center", fontsize=8, color=GREY, fontstyle="italic")
+ax.text(6, 0.15, "the estimator's quote button carries the full basket to the contact form via ?details=.",
         ha="center", fontsize=8, color=GREY, fontstyle="italic")
 save(f, "web_sitemap.png")
 
 
-# 2. Hosting & publishing
+# 2. Hosting & publishing — Rise + StackCDN, front door, mail pipeline
 f, ax = fig()
-ax.text(6, 7.6, "P3MAI Website — Hosting & Publishing", ha="center", fontsize=15, fontweight="bold", color=NAVY)
-box(ax, 0.5, 4.4, 3.0, 1.3, "Local source", fill="white", fg=NAVY, edge=NAVY, sub="business-website/\n(HTML · CSS · JS)")
-box(ax, 4.6, 4.4, 3.0, 1.3, "Rise hosting", fill=NAVY, sub="public_html (FTP)")
-box(ax, 8.6, 4.4, 2.9, 1.3, "p3mai.com", fill=GOLDD, sub="the live site")
-arrow(ax, 3.5, 5.05, 4.6, 5.05, color=NAVYL, text="upload selected files (FTP)", style="-|>")
-arrow(ax, 7.6, 5.05, 8.6, 5.05, color=NAVYL, text="served", style="-|>")
-# env-aware links to the two apps on Render
-box(ax, 2.6, 1.6, 3.4, 1.0, "PMO Service", fill=GREEN, fs=10, sub="app.p3mai.com → Render")
-box(ax, 6.4, 1.6, 3.4, 1.0, "Method Map", fill=STEEL, fs=10, sub="prince2.p3mai.com → Render")
-arrow(ax, 9.6, 4.4, 8.1, 2.6, color=GREY, text="subdomains", style="-|>")
-arrow(ax, 10.0, 4.4, 5.0, 2.6, color=GREY, style="-|>")
-ax.text(6, 0.7, "The Services page links to both apps via env-aware JS (localhost in dev, live domain in prod).",
-        ha="center", fontsize=8.5, color=GREY, fontstyle="italic")
-ax.text(6, 0.2, "Publish = drop only the approved static files into public_html (never the whole folder).",
+ax.text(6, 7.7, "P3MAI Website — Hosting & Publishing", ha="center", fontsize=15, fontweight="bold", color=NAVY)
+box(ax, 0.4, 5.2, 2.9, 1.3, "Local source", fill="white", fg=NAVY, edge=NAVY,
+    sub="business-website/\n(HTML · CSS · JS · PHP)")
+box(ax, 4.1, 5.2, 2.9, 1.3, "Rise hosting", fill=NAVY, sub="public_html\n(File Manager / FTP)")
+box(ax, 7.8, 5.2, 3.6, 1.3, "p3mai.com", fill=GOLDD, sub="behind StackCDN\n(assets cached by exact URL)")
+arrow(ax, 3.3, 5.85, 4.1, 5.85, color=NAVYL, text="allow-list upload", style="-|>")
+arrow(ax, 7.0, 5.85, 7.8, 5.85, color=NAVYL, text="served", style="-|>")
+# the mail pipeline + the front door
+box(ax, 1.0, 2.9, 3.6, 0.95, "contact.php → mailbox", fill=RED, fs=9,
+    sub="drcolvin@p3mai.com (SPF via noreply@)")
+arrow(ax, 8.6, 5.2, 3.4, 3.85, color=GREY, text="form posts", style="-|>")
+box(ax, 5.4, 2.9, 3.2, 0.95, "?v=N cache-busting", fill=STEEL, fs=9,
+    sub="bump on change · pre-warm after deploy")
+box(ax, 9.0, 2.9, 2.6, 0.95, "apps front door", fill=GREEN, fs=9,
+    sub="apps.p3mai.com/<slug>\n6 apps on Render")
+arrow(ax, 10.3, 5.2, 10.3, 3.85, color=GREY, text="env-aware links", style="-|>")
+ax.text(6, 1.6, "Never probe a future ?v=N URL before the file is deployed — the probe caches the old content under the new string.",
         ha="center", fontsize=8.5, color=RED, fontstyle="italic")
+ax.text(6, 1.15, "Publish = only the approved allow-list into public_html (never the whole folder). Distinct zip names per release.",
+        ha="center", fontsize=8.5, color=GREY, fontstyle="italic")
 save(f, "web_hosting.png")
 print("done")

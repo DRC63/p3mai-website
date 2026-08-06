@@ -12,8 +12,12 @@ Word document paired with a PowerPoint summary, plus a house style and diagrams.
 | DOC-02 | **User Manual** — a visitor guide to the pages and the cost estimator | [02_User_Manual.docx](02_User_Manual.docx) | [02_…_Summary.pptx](02_User_Manual_Summary.pptx) |
 | DOC-03 | **Operation Manual** — editing, env-aware links, local preview, publishing to Rise, DNS | [03_Operation_Manual.docx](03_Operation_Manual.docx) | [03_…_Summary.pptx](03_Operation_Manual_Summary.pptx) |
 
-All three are **v1.0, 1 August 2026**. DOC-03 is **OFFICIAL-SENSITIVE** (it lists
-the publish allow-list and hosting specifics); the others are **OFFICIAL**.
+All three are **v2.0, 6 August 2026** (v1.0 was 1 August 2026 — v2.0 reflects the
+copy overhaul, the service detail pages, the four blog articles, the services cost
+estimator, the context-carrying contact flow, the contact.php mail pipeline, the
+apps.p3mai.com front door, and the CDN cache-busting discipline). DOC-03 is
+**OFFICIAL-SENSITIVE** (it lists the publish allow-list and hosting specifics);
+the others are **OFFICIAL**.
 
 ## Regenerating
 
