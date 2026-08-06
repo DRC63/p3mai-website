@@ -24,8 +24,7 @@ Business website for P3MAI — Program, Project, and PMO Management in AI. Dougl
 | blog.html | 3 AI/PM posts, author widget with photo, categories |
 | contact.html | Validated form, both emails/phones, Google Map (DIFC Dubai), hours |
 | calculator.html | Original simple web-project cost estimator (self-contained, real-time totals) |
-| **p3mai_services_cost_estimator.html** | **The primary estimator** — real P3MAI service catalogue. Three towers, twelve fixed-price products in three families, POTI multiplier for consulting, product tier and licence multipliers, costed maintenance window, sticky summary rail, AED/GBP/USD. **Pricing logic: `memory/approach/pricing-model.md`.** |
-| p3mai_cost_estimator.html | Earlier generic AI-services estimator (freelancing / content / products / automation / consulting). Superseded by the services estimator but retained. |
+| **p3mai_services_cost_estimator.html** | **The primary estimator** — real P3MAI service catalogue. Three towers, twelve fixed-price products in three families, POTI multiplier for consulting, product tier and licence multipliers, costed maintenance window, sticky summary rail, AED/GBP/USD. Linked from services.html ("Get an Instant Cost Estimate"), with a "← Back to Services" return link. **Pricing logic: `memory/approach/pricing-model.md`.** |
 | style.css / script.js | Shared design system + interactions (sticky nav, hamburger, reveal animations, page transitions, form validation) |
 | douglas.jpg | Headshot — Adobe-processed (auto-tone + background removed onto `#F6F7F9`), used on About + blog sidebar |
 

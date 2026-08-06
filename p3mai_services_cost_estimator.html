@@ -88,6 +88,15 @@
   }
   .rail-empty { font-size: 0.8rem; color: var(--color-text-muted); font-style: italic; line-height: 1.5; }
 
+  /* ---------- Back link ---------- */
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted);
+    text-decoration: none; margin-bottom: 18px;
+    transition: color var(--transition);
+  }
+  .back-link:hover { color: var(--color-primary); }
+
   /* ---------- Brand lockup (matches style.css) ---------- */
   .brand-bar { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 22px; }
   .brand-bar img { display: block; height: 46px; width: auto; }
@@ -358,6 +367,8 @@
 <body>
 
   <div class="page-wrap">
+
+    <a href="services.html" class="back-link">&larr; Back to Services</a>
 
     <div class="brand-bar">
       <img src="logo-triangle-navy.svg" alt="" aria-hidden="true">

@@ -519,6 +519,12 @@ section { padding: 88px 0; }
 .pricing-card .btn-accent:hover { transform: translateY(-3px) scale(1.04); }
 .pricing-card .btn + .btn { margin-top: 12px; }
 
+/* ---------- Cost estimator CTA ---------- */
+.estimator-cta {
+  text-align: center;
+  margin-top: 44px;
+}
+
 /* ---------- Comparison table ---------- */
 .comparison-wrap {
   margin-top: 64px;
