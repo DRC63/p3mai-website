@@ -241,14 +241,34 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      // No backend wired up yet — simulate a successful submission.
-      if (formSuccess) {
-        formSuccess.classList.remove('hidden');
-        formSuccess.textContent = "Thank you! I'll be in touch within 24 hours.";
-        formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Submit to the PHP mail handler, which emails the enquiry to the
+      // domain mailbox. The button is locked while sending so a slow server
+      // can't collect double submissions.
+      var submitBtn = contactForm.querySelector('button[type="submit"]');
+      var originalLabel = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
       }
 
-      contactForm.reset();
+      function showResult(ok) {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+        }
+        if (!formSuccess) return;
+        formSuccess.classList.remove('hidden');
+        formSuccess.textContent = ok
+          ? "Thank you! Your message has been sent — I'll be in touch within 24 hours."
+          : 'Something went wrong sending your message. Please email me directly at drcolvin@p3mai.com.';
+        formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (ok) contactForm.reset();
+      }
+
+      fetch('contact.php', { method: 'POST', body: new FormData(contactForm) })
+        .then(function (res) { return res.json(); })
+        .then(function (data) { showResult(!!(data && data.ok)); })
+        .catch(function () { showResult(false); });
     });
   }
 
