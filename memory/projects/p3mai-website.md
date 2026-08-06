@@ -46,6 +46,11 @@ Business website for P3MAI — Program, Project, and PMO Management in AI. Dougl
 - Certifications: APM, PRINCE2, MSP, SAFe Scrum Master, Lean Six Sigma Green Belt
 
 ## Copy positioning (adopted 2026-08-06, via structured interview with Douglas)
+**Deployed to Rise and verified live on p3mai.com 2026-08-06** — all 8 pages 200, new
+components styled (v=6 CSS confirmed serving), app buttons env-swapped to apps.p3mai.com,
+zero console errors. Pending: real testimonials (then activate the commented-out section
+on index.html), then pivot the primary CTA from products-first to the free delivery health
+check — both tracked in `P3MAI-Portfolio/BACKLOG.md` (MKT-08, MKT-09).
 - **Audience:** all three tiers — GCC enterprise/gov-linked orgs (primary), global blue-chips
   delivering in the region, mid-size firms priced out of Big-4.
 - **Upsell ladder is explicit site-wide:** free tools (method maps, P3M3, estimator) → paid
