@@ -14,3 +14,6 @@ desktop.ini
 # Internal reading summaries / planning binaries — large, and derived from
 # third-party published material. Kept locally, never published or committed.
 reference/
+
+# Python bytecode (docs generators)
+__pycache__/
